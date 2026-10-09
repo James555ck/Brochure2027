@@ -54,14 +54,15 @@
     const el = document.createElement('div');
     el.className = 'page';
     if (p.blank) { el.classList.add('blank'); return el; }
-    if (p.kind === 'index') { el.classList.add('index'); el.innerHTML = indexHTML(posOfSrc); }
-    else {
-      const img = document.createElement('img');
-      img.src = `pages/${p.id}.jpg`;
-      img.alt = '';
-      img.decoding = 'async';
-      img.draggable = false;
-      el.appendChild(img);
+    const img = document.createElement('img');
+    img.src = `pages/${p.id}.jpg`;
+    img.alt = '';
+    img.decoding = 'async';
+    img.draggable = false;
+    el.appendChild(img);
+    if (p.kind === 'index') {                        // photo + white card from the PDF, index drawn live on top
+      el.classList.add('index');
+      el.insertAdjacentHTML('beforeend', indexHTML(posOfSrc));
     }
     if (p.num) {
       const n = document.createElement('span');
@@ -73,30 +74,29 @@
   }
 
   function indexHTML(posOfSrc) {
-    const row = (label, src) => `<div class="row"><span>${esc(label)}</span><span>${pad2(posOfSrc[src])}</span></div>`;
-    let html = '<div class="idx"><h2>Index</h2>';
-    html += '<div class="front">' + catalog.frontIndex.map((f) => row(f.label, f.src)).join('') + '</div>';
-    const back = catalog.backIndex.map((f) => row(f.label, f.src)).join('');
+    const row = (label, src) => `<div class="row"><span>${esc(label)}</span><span>${posOfSrc[src]}</span></div>`;
+    let html = '<div class="idx"><h2>Index</h2><div class="flow">';
+    html += '<section class="sec front">' + [...catalog.frontIndex, ...catalog.backIndex].map((f) => row(f.label, f.src)).join('') + '</section>';
 
     for (const tier of catalog.tiers) {
       const items = catalog.products.filter((x) => x.tier === tier.id && kept.has(x.id));
       if (!items.length) continue;
       const cats = [...new Set(items.map((x) => x.category))];
-      html += `<div class="itier"><div class="tname">${esc(tier.name)}</div>`;
+      html += `<section class="sec itier"><div class="tname">${esc(tier.name)}</div>`;
       for (const cat of cats) {
         html += `<div class="cat"><div class="cname">${esc(cat)}</div><div class="items">`;
         for (const x of items.filter((i) => i.category === cat)) {
           const last = x.pages[x.pages.length - 1];
-          html += `<div class="item"><span>${esc(x.name)} <span class="code">(${esc(x.code)})</span></span><span>${pad2(posOfSrc[last])}</span></div>`;
+          html += `<div class="item"><span>${esc(x.name)} <span class="code">(${esc(x.code)})</span></span><span>${posOfSrc[last]}</span></div>`;
         }
         html += '</div></div>';
       }
-      html += '</div>';
+      html += '</section>';
     }
-    html += `<div class="front" style="margin-top:4cqw">${back}</div></div>`;
+    html += '</div>';
     if (['vulcan', 'prostar', 'andromeda'].some((id) => kept.has(id)))
-      html += '<div class="quote">“We’re so happy you’re launching a Workwear Hoodie, Polo and T-shirt so we can finally offer our customers a full workwear bundle.”</div>';
-    return html;
+      html += '<div class="quote">“We’re so happy you’re launching a Workwear Hoodie, Polo and T-Shirt so we can finally offer our customers a Cottonridge workwear bundle.”</div>';
+    return html + '</div>';
   }
 
   // ---- book -------------------------------------------------------------------

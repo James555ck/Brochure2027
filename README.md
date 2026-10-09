@@ -3,7 +3,7 @@
 A flipbook brochure where the viewer chooses which products are in it. Remove a product and its pages drop out,
 the remaining pages renumber and the index rebuilds itself. Everything runs in the browser.
 
-Built from the leavers flipbook (`Flipbookshare`), reusing its page-flip engine (StPageFlip, MIT) with clean app code.
+Built from `Cottonridge Brochure 3.3.pdf` (44 pages), in the style of the leavers flipbook (`FlipBook`), reusing its page-flip engine (StPageFlip, MIT) with clean app code.
 
 ## How it works
 - `pages/pNN.jpg` - each source PDF page rendered at 150 dpi, with the printed page number removed.

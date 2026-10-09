@@ -110,23 +110,23 @@ button{font:inherit;color:inherit}
 .page img{width:100%;height:100%;display:block;object-fit:cover;-webkit-user-drag:none;user-select:none}
 .page.blank{background:#fff}
 .page.edge{background:none;box-shadow:none;pointer-events:none}
-.pnum{position:absolute;bottom:1.78cqw;font-size:1.68cqw;line-height:1;color:#d0d0cf;font-variant-numeric:tabular-nums}
-.pnum.left{left:2.35cqw}
+.pnum{position:absolute;bottom:1.85cqw;font-size:1.68cqw;line-height:1;color:#999;font-variant-numeric:tabular-nums}
+.pnum.left{left:2.52cqw}
 .pnum.right{right:2.35cqw}
 
-/* generated index page — sizes in cqw so it scales with the page (1pt = .168cqw) */
-.page.index{color:#000}
-.index .idx{position:absolute;left:14.1cqw;right:14.1cqw;top:7.6cqw}
-.index h2{margin:0 0 5cqw;font-size:5.4cqw;line-height:1;font-weight:500;letter-spacing:-.02em}
-.index .row{display:flex;justify-content:space-between;font-size:1.28cqw;line-height:2.1cqw}
-.index .front{margin-bottom:1.7cqw}
-.index .itier{position:relative;margin-top:4.2cqw;padding-top:1.6cqw;border-top:.1cqw solid #e6e6e4}
-.index .itier:first-of-type{margin-top:6cqw}
-.index .tname{position:absolute;left:0;top:1.3cqw;font-size:3.9cqw;line-height:1;font-weight:500;letter-spacing:-.02em}
-.index .cat{display:grid;grid-template-columns:263fr 145fr;column-gap:3.2cqw;margin-bottom:1.5cqw}
-.index .cname{text-align:right;font-size:1.28cqw;line-height:1.55cqw}
-.index .items{display:flex;flex-direction:column}
-.index .item{display:flex;justify-content:space-between;font-size:1.28cqw;line-height:1.55cqw}
-.index .code{color:#b9b9b6}
-.index .quote{position:absolute;left:17.5cqw;right:17.5cqw;bottom:6.4cqw;text-align:center;
-  font-style:italic;font-size:1.1cqw;line-height:1.5;color:#201f1c}
+/* generated index page, drawn over the PDF's photo + white card. 1pt of the 595pt-wide page = .168067cqw */
+.page.index{--pt:.168067cqw;color:#111}
+.index .idx{position:absolute;inset:0;font-size:calc(7.5 * var(--pt));line-height:calc(11 * var(--pt))}
+.index h2{position:absolute;left:calc(64 * var(--pt));top:calc(54 * var(--pt));margin:0;font-size:calc(60 * var(--pt));
+  line-height:1;font-weight:800;letter-spacing:-.05em}
+.index .flow{position:absolute;left:calc(64 * var(--pt));right:calc(64 * var(--pt));top:calc(148 * var(--pt))}
+.index .sec{position:relative;border-top:calc(1 * var(--pt)) solid #111;padding:calc(9 * var(--pt)) 0 calc(13 * var(--pt))}
+.index .front{font-size:calc(8 * var(--pt));line-height:calc(14 * var(--pt));padding-top:calc(8 * var(--pt));padding-bottom:calc(10 * var(--pt))}
+.index .row,.index .item{display:flex;justify-content:space-between}
+.index .tname{position:absolute;left:0;top:calc(9 * var(--pt));font-size:calc(10 * var(--pt));font-weight:700}
+.index .cat{display:grid;grid-template-columns:calc(118 * var(--pt)) 1fr;margin-left:calc(90 * var(--pt));margin-bottom:calc(6 * var(--pt))}
+.index .cat:last-child{margin-bottom:0}
+.index .cname{font-size:calc(7 * var(--pt));font-weight:700}
+.index .code{color:#999}
+.index .quote{position:absolute;left:calc(64 * var(--pt));right:calc(64 * var(--pt));top:calc(751 * var(--pt));
+  border-top:calc(1 * var(--pt)) solid #111;padding-top:calc(10 * var(--pt));font-size:calc(7 * var(--pt));line-height:calc(11 * var(--pt))}
