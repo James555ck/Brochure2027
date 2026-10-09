@@ -377,6 +377,8 @@
    ]
   }
  ],
+ "build": "1791561214",
+ "live": false,
  "pages": [
   {
    "id": "p01",
@@ -386,26 +388,22 @@
   {
    "id": "p02",
    "src": 2,
-   "kind": "story",
-   "num": "left"
+   "kind": "story"
   },
   {
    "id": "p03",
    "src": 3,
-   "kind": "offer",
-   "num": "right"
+   "kind": "offer"
   },
   {
    "id": "p04",
    "src": 4,
-   "kind": "ranges",
-   "num": "left"
+   "kind": "ranges"
   },
   {
    "id": "p05",
    "src": 5,
-   "kind": "index",
-   "num": "right"
+   "kind": "index"
   },
   {
    "id": "p06",
@@ -419,8 +417,7 @@
    "kind": "product",
    "requires": [
     "meteor"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p08",
@@ -428,8 +425,7 @@
    "kind": "product",
    "requires": [
     "apollo"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p09",
@@ -437,8 +433,7 @@
    "kind": "product",
    "requires": [
     "solar"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p10",
@@ -446,8 +441,7 @@
    "kind": "product",
    "requires": [
     "nebula"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p11",
@@ -455,8 +449,7 @@
    "kind": "product",
    "requires": [
     "astra"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p12",
@@ -473,8 +466,7 @@
    "kind": "product",
    "requires": [
     "atlas"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p14",
@@ -482,8 +474,7 @@
    "kind": "product",
    "requires": [
     "juno"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p15",
@@ -491,8 +482,7 @@
    "kind": "product",
    "requires": [
     "vulcan"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p16",
@@ -506,8 +496,7 @@
    "kind": "product",
    "requires": [
     "orion"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p18",
@@ -515,8 +504,7 @@
    "kind": "product",
    "requires": [
     "eclipse"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p19",
@@ -524,8 +512,7 @@
    "kind": "product",
    "requires": [
     "cassini"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p20",
@@ -533,8 +520,7 @@
    "kind": "product",
    "requires": [
     "odyssey"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p21",
@@ -542,8 +528,7 @@
    "kind": "product",
    "requires": [
     "horizon"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p22",
@@ -560,8 +545,7 @@
    "kind": "product",
    "requires": [
     "lunar"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p24",
@@ -575,8 +559,7 @@
    "kind": "product",
    "requires": [
     "gemini"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p26",
@@ -584,8 +567,7 @@
    "kind": "product",
    "requires": [
     "prostar"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p27",
@@ -593,8 +575,7 @@
    "kind": "product",
    "requires": [
     "andromeda"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p28",
@@ -602,8 +583,7 @@
    "kind": "product",
    "requires": [
     "titan"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p29",
@@ -611,8 +591,7 @@
    "kind": "product",
    "requires": [
     "comet"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p30",
@@ -620,8 +599,7 @@
    "kind": "product",
    "requires": [
     "saturn"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p31",
@@ -629,8 +607,7 @@
    "kind": "product",
    "requires": [
     "jupiter"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p32",
@@ -638,8 +615,7 @@
    "kind": "product",
    "requires": [
     "quasar"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p33",
@@ -647,8 +623,7 @@
    "kind": "product",
    "requires": [
     "neptune"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p34",
@@ -656,8 +631,7 @@
    "kind": "product",
    "requires": [
     "venus"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p35",
@@ -678,8 +652,7 @@
    "requires": [
     "apollo-k",
     "solar-k"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p38",
@@ -688,8 +661,7 @@
    "requires": [
     "nebula-k",
     "astra-k"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p39",
@@ -697,8 +669,7 @@
    "kind": "product",
    "requires": [
     "orion-k"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p40",
@@ -707,8 +678,7 @@
    "requires": [
     "eclipse-k",
     "cassini-k"
-   ],
-   "num": "left"
+   ]
   },
   {
    "id": "p41",
@@ -716,20 +686,17 @@
    "kind": "product",
    "requires": [
     "andromeda-k"
-   ],
-   "num": "right"
+   ]
   },
   {
    "id": "p42",
    "src": 42,
-   "kind": "cord",
-   "num": "left"
+   "kind": "cord"
   },
   {
    "id": "p43",
    "src": 43,
-   "kind": "cord",
-   "num": "right"
+   "kind": "cord"
   },
   {
    "id": "p44",

@@ -55,12 +55,12 @@
     el.className = 'page';
     if (p.blank) { el.classList.add('blank'); return el; }
     const img = document.createElement('img');
-    img.src = `pages/${p.id}.jpg`;
+    img.src = `pages/${p.id}.jpg?v=${catalog.build}`;
     img.alt = '';
     img.decoding = 'async';
     img.draggable = false;
     el.appendChild(img);
-    if (p.kind === 'index') {                        // photo + white card from the PDF, index drawn live on top
+    if (p.kind === 'index' && catalog.live) {        // photo + white card from the PDF, index drawn live on top
       el.classList.add('index');
       el.insertAdjacentHTML('beforeend', indexHTML(posOfSrc));
     }
@@ -308,7 +308,7 @@
   $('stage').addEventListener('pointerdown', () => closeAll());
 
   // ---- product picker ---------------------------------------------------------
-  const thumb = (x) => `pages/thumb/p${pad2(x.pages[0])}.jpg`;
+  const thumb = (x) => `pages/thumb/p${pad2(x.pages[0])}.jpg?v=${catalog.build}`;
   let rebuildTimer;
 
   function buildPicker() {
@@ -376,7 +376,7 @@
 
   async function init() {
     try {
-      catalog = await (await fetch('catalog.json')).json();
+      catalog = await (await fetch('catalog.json?t=' + Date.now(), { cache: 'no-store' })).json();
     } catch (e) {
       status.textContent = 'Could not load the brochure data.';
       return;

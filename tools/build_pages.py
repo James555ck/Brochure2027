@@ -11,6 +11,7 @@ Usage:  python tools/build_pages.py "<path to Brochure PDF>"
 """
 import json
 import sys
+import time
 from pathlib import Path
 
 import pymupdf
@@ -75,6 +76,10 @@ FRONT_INDEX = [("Our story", 2), ("Why choose us", 3), ("Our ranges", 4), ("Cord
 BACK_INDEX = []
 INDEX_PAGE = 5
 
+# LIVE=False: import the PDF exactly as printed (its own index and page numbers).
+# LIVE=True: strip the printed numbers/index text so the viewer can redraw them after pages are removed.
+LIVE = False
+
 
 def main(pdf_path: str) -> None:
     src = pymupdf.open(pdf_path)
@@ -110,31 +115,32 @@ def main(pdf_path: str) -> None:
                 meta["spreadStart"] = True
         pages_meta.append(meta)
 
-        # strip the printed page number (text only; photos/graphics untouched)
-        for b in page.get_text("dict")["blocks"]:
-            for l in b.get("lines", []):
-                for s in l["spans"]:
-                    t = s["text"].strip()
-                    if t.isdigit() and int(t) == n and s["bbox"][1] > 780:
-                        page.add_redact_annot(pymupdf.Rect(s["bbox"]), fill=False)
-                        meta["num"] = "right" if s["bbox"][0] > 300 else "left"
-        if n == INDEX_PAGE:                         # the index is drawn live: clear all its text first
-            page.add_redact_annot(page.rect, fill=False)
-        page.apply_redactions(
-            images=pymupdf.PDF_REDACT_IMAGE_NONE,
-            graphics=pymupdf.PDF_REDACT_LINE_ART_NONE,
-            text=pymupdf.PDF_REDACT_TEXT_REMOVE,
-        )
-        if n == INDEX_PAGE:                         # ...then its thin horizontal rules (the live index draws its own)
-            for dr in page.get_drawings():
-                r = dr["rect"]
-                if r.height <= 1.5 and r.width > 400:
-                    page.add_redact_annot(pymupdf.Rect(r.x0 - 1, r.y0 - 1, r.x1 + 1, r.y1 + 1), fill=False)
+        if LIVE:
+            # strip the printed page number (text only; photos/graphics untouched)
+            for b in page.get_text("dict")["blocks"]:
+                for l in b.get("lines", []):
+                    for s in l["spans"]:
+                        t = s["text"].strip()
+                        if t.isdigit() and int(t) == n and s["bbox"][1] > 780:
+                            page.add_redact_annot(pymupdf.Rect(s["bbox"]), fill=False)
+                            meta["num"] = "right" if s["bbox"][0] > 300 else "left"
+            if n == INDEX_PAGE:                         # the index is drawn live: clear all its text first
+                page.add_redact_annot(page.rect, fill=False)
             page.apply_redactions(
                 images=pymupdf.PDF_REDACT_IMAGE_NONE,
-                graphics=pymupdf.PDF_REDACT_LINE_ART_REMOVE_IF_COVERED,
-                text=pymupdf.PDF_REDACT_TEXT_NONE,
+                graphics=pymupdf.PDF_REDACT_LINE_ART_NONE,
+                text=pymupdf.PDF_REDACT_TEXT_REMOVE,
             )
+            if n == INDEX_PAGE:                         # ...then its thin horizontal rules (the live index draws its own)
+                for dr in page.get_drawings():
+                    r = dr["rect"]
+                    if r.height <= 1.5 and r.width > 400:
+                        page.add_redact_annot(pymupdf.Rect(r.x0 - 1, r.y0 - 1, r.x1 + 1, r.y1 + 1), fill=False)
+                page.apply_redactions(
+                    images=pymupdf.PDF_REDACT_IMAGE_NONE,
+                    graphics=pymupdf.PDF_REDACT_LINE_ART_REMOVE_IF_COVERED,
+                    text=pymupdf.PDF_REDACT_TEXT_NONE,
+                )
         pix = page.get_pixmap(dpi=DPI, alpha=False)
         pix.save(out / f"p{n:02d}.jpg", jpg_quality=JPG_QUALITY)
         page.get_pixmap(dpi=48, alpha=False).save(out / "thumb" / f"p{n:02d}.jpg", jpg_quality=72)  # picker tiles
@@ -149,6 +155,8 @@ def main(pdf_path: str) -> None:
             {"id": i, "name": n, "code": c, "tier": t, "category": cat, "kids": k, "pages": pg}
             for i, n, c, t, cat, k, pg in PRODUCTS
         ],
+        "build": str(int(time.time())),   # stamped on every image URL so a new import never shows cached pages
+        "live": LIVE,
         "pages": pages_meta,
         "frontIndex": [{"label": l, "src": p} for l, p in FRONT_INDEX],
         "backIndex": [{"label": l, "src": p} for l, p in BACK_INDEX],
