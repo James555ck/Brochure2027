@@ -73,7 +73,7 @@ BACK_INDEX = [("Cord change", 39)]
 def main(pdf_path: str) -> None:
     src = pymupdf.open(pdf_path)
     out = ROOT / "pages"
-    out.mkdir(exist_ok=True)
+    (out / "thumb").mkdir(parents=True, exist_ok=True)
 
     owners: dict[int, list[str]] = {}
     for pid, *_rest, pages in PRODUCTS:
@@ -122,6 +122,7 @@ def main(pdf_path: str) -> None:
             continue
         pix = page.get_pixmap(dpi=DPI, alpha=False)
         pix.save(out / f"p{n:02d}.jpg", jpg_quality=JPG_QUALITY)
+        page.get_pixmap(dpi=48, alpha=False).save(out / "thumb" / f"p{n:02d}.jpg", jpg_quality=72)  # picker tiles
         print("rendered", n)
 
     w, h = src[0].rect.width, src[0].rect.height

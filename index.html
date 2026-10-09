@@ -6,21 +6,70 @@
 <title>Cottonridge 2027 Brochure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="topbar">
   <div class="titles">
     <h1 id="title">Cottonridge 2027</h1>
-    <p class="sub" id="sub"></p>
+    <p class="sub">Drag a corner, scroll, click the arrows, or use the keyboard</p>
   </div>
 </header>
 
+<section class="how" id="how">
+  <div class="acc">
+    <button class="acchd" type="button" aria-expanded="false" aria-controls="body1" data-step="1">
+      <span class="stepno">1</span>
+      <span class="acctxt"><span class="sn">Choose your products</span><span class="accsub" id="sub1">Pick your ranges and styles.</span></span>
+      <span class="accact"><span class="chev" aria-hidden="true">&#8250;</span></span>
+    </button>
+    <div class="accbody" id="body1" hidden>
+      <p class="st">Tap a product to include it or leave it out. The pages, index and page numbers follow your choice straight away.</p>
+      <div class="inchead">
+        <span class="inccount" id="count"></span>
+        <div class="inclinks">
+          <button class="btn" type="button" id="all">Include all</button>
+          <button class="btn" type="button" id="none">Remove all</button>
+        </div>
+      </div>
+      <div id="tiers"></div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acchd" type="button" aria-expanded="false" aria-controls="body2" data-step="2">
+      <span class="stepno">2</span>
+      <span class="acctxt"><span class="sn">Customise</span><span class="accsub">Add your logo and company details.</span></span>
+      <span class="accact"><span class="chev" aria-hidden="true">&#8250;</span></span>
+    </button>
+    <div class="accbody" id="body2" hidden>
+      <p class="st">Coming next: add your own logo and contact details to the cover and back page.</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acchd" type="button" aria-expanded="false" aria-controls="body3" data-step="3">
+      <span class="stepno">3</span>
+      <span class="acctxt"><span class="sn">Download</span><span class="accsub">Your PDF and flipbook.</span></span>
+      <span class="accact"><span class="chev" aria-hidden="true">&#8250;</span></span>
+    </button>
+    <div class="accbody" id="body3" hidden>
+      <p class="st">Coming next: download a print-ready PDF and a digital flipbook of your brochure.</p>
+    </div>
+  </div>
+</section>
+
 <main class="stage" id="stage">
   <button class="nav prev" id="prev" aria-label="Previous page" disabled>&#8249;</button>
-  <div class="bookwrap" id="bookwrap"></div>
+  <div class="bookwrap" id="bookwrap"><div id="zoomer"></div></div>
   <button class="nav next" id="next" aria-label="Next page">&#8250;</button>
+  <div class="zoomctl" role="group" aria-label="Zoom">
+    <button type="button" id="zout" aria-label="Zoom out">&minus;</button>
+    <span class="zv" id="zv">100%</span>
+    <button type="button" id="zin" aria-label="Zoom in">+</button>
+    <button type="button" id="zreset" aria-label="Reset zoom">&#10530;</button>
+  </div>
   <div class="status" id="status">Loading brochure&hellip;</div>
 </main>
 
