@@ -105,6 +105,7 @@
     const here = flip && layout[flip.getCurrentPageIndex()];
     const hereSrc = here && !here.blank ? here.src : null;
 
+    wheelReset();
     if (flip) { try { flip.destroy(); } catch (e) { /* already gone */ } flip = null; }
     zoomer.innerHTML = '';
 
@@ -221,16 +222,55 @@
   wrap.addEventListener('pointerup', endDrag);
   wrap.addEventListener('pointercancel', endDrag);
 
-  // scroll turns pages; ctrl/cmd + scroll zooms
-  let wheelLock = 0;
+  // scroll folds the page continuously (like dragging the corner); ctrl/cmd + scroll zooms
+  const wheel = { on: false, dir: 0, target: 0, shown: 0, busyUntil: 0, idle: 0, raf: 0, startX: 0, y: 0, travel: 0 };
+
+  function wheelReset() {
+    cancelAnimationFrame(wheel.raf);
+    clearTimeout(wheel.idle);
+    wheel.on = false; wheel.target = wheel.shown = 0; wheel.raf = 0;
+  }
+  const wheelPos = () => ({ x: wheel.startX - wheel.dir * wheel.shown * wheel.travel, y: wheel.y - wheel.shown * wheel.travel * 0.08 });
+
+  function wheelFrame() {
+    wheel.raf = 0;
+    if (!wheel.on || !flip) return;
+    wheel.shown += (wheel.target - wheel.shown) * 0.35;          // ease towards the wheel
+    if (Math.abs(wheel.target - wheel.shown) < 0.002) wheel.shown = wheel.target;
+    flip.userMove(wheelPos(), false);
+    if (wheel.shown >= 0.97 && wheel.target >= 0.97) { wheelRelease(); return; }   // fully across: finish the turn
+    if (wheel.shown !== wheel.target) wheel.raf = requestAnimationFrame(wheelFrame);
+  }
+
+  function wheelRelease() {
+    if (!wheel.on) return;
+    const pos = wheelPos();
+    wheelReset();
+    flip.userStop(pos, false);                                  // engine completes or reverts the fold
+    wheel.busyUntil = Date.now() + FLIP_MS + 30;
+  }
+
   wrap.addEventListener('wheel', (e) => {
     if (e.ctrlKey || e.metaKey) { e.preventDefault(); setZoom(zoom - e.deltaY * 0.005); return; }
-    if (zoom > 1) { panX -= e.deltaX; panY -= e.deltaY; applyZoom(); e.preventDefault(); return; }
     e.preventDefault();
-    const now = Date.now();
-    if (!flip || now < wheelLock || Math.abs(e.deltaY) + Math.abs(e.deltaX) < 4) return;
-    wheelLock = now + FLIP_MS + 40;
-    (e.deltaY + e.deltaX > 0) ? flip.flipNext() : flip.flipPrev();
+    if (zoom > 1) { panX -= e.deltaX; panY -= e.deltaY; applyZoom(); return; }
+    if (!flip) return;
+    let d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    d *= e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? pageH : 1;
+    if (!d || Date.now() < wheel.busyUntil) return;
+
+    if (!wheel.on) {
+      const dir = d > 0 ? 1 : -1;
+      if (dir > 0 ? nextBtn.disabled : prevBtn.disabled) return;
+      const W = dims.pw * (dims.portrait ? 1 : 2);
+      Object.assign(wheel, { on: true, dir, target: 0, shown: 0, travel: W * 0.96, startX: dir > 0 ? W - 2 : 2, y: dims.ph - 2 });
+      flip.startUserTouch({ x: wheel.startX, y: wheel.y });
+    }
+    // pushing the other way pulls the page back
+    wheel.target = Math.max(0, Math.min(1, wheel.target + (d * wheel.dir) / (dims.pw * 0.8)));
+    if (!wheel.raf) wheel.raf = requestAnimationFrame(wheelFrame);
+    clearTimeout(wheel.idle);
+    wheel.idle = setTimeout(wheelRelease, 150);                 // wheel stopped: let go
   }, { passive: false });
 
   // ---- navigation -------------------------------------------------------------
