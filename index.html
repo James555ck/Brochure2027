@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cottonridge 2027 Brochure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="titles">
+    <h1 id="title">Cottonridge 2027</h1>
+    <p class="sub" id="sub"></p>
+  </div>
+</header>
+
+<main class="stage" id="stage">
+  <button class="nav prev" id="prev" aria-label="Previous page" disabled>&#8249;</button>
+  <div class="bookwrap" id="bookwrap"></div>
+  <button class="nav next" id="next" aria-label="Next page">&#8250;</button>
+  <div class="status" id="status">Loading brochure&hellip;</div>
+</main>
+
+<script src="lib/page-flip.browser.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+:root{
+  --fg:#201f1c; --muted:#6b685f; --bg:#fff; --stage:#f3f2ee;
+  --u:13px; --phi:1.618; --h:calc(var(--u) * var(--phi));
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  display:flex;flex-direction:column;overflow:hidden;background:var(--bg);color:var(--fg);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:var(--u);line-height:var(--phi);-webkit-font-smoothing:antialiased;
+}
+.topbar{flex:0 0 auto;padding:calc(var(--u) + env(safe-area-inset-top,0px)) 20px var(--u)}
+.topbar h1{margin:0;font-size:var(--h);line-height:1.2;font-weight:700;letter-spacing:-.015em}
+.topbar .sub{margin:0;color:var(--muted)}
+
+.stage{flex:1 1 auto;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;
+  gap:8px;padding:12px;background:var(--stage)}
+.bookwrap{flex:1 1 0;min-width:0;min-height:0;align-self:stretch;position:relative;overflow:hidden}
+#book{position:absolute;touch-action:pan-y;
+  transition:transform .65s cubic-bezier(.45,0,.25,1)}
+.nav{flex:0 0 auto;z-index:2;width:44px;height:44px;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(0,0,0,.35);color:#fff;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center}
+.nav:hover:not(:disabled){background:rgba(0,0,0,.5)}
+.nav:disabled{opacity:.25;cursor:default}
+@media (max-width:480px){.nav{width:36px;height:36px;font-size:22px}}
+.status{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;
+  background:var(--stage);text-align:center;padding:24px}
+.status[hidden]{display:none}
+
+/* ---- pages ---------------------------------------------------------------- */
+.page{background:#fff;overflow:hidden;container-type:inline-size;position:relative}
+.page img{width:100%;height:100%;display:block;object-fit:cover;-webkit-user-drag:none;user-select:none}
+.page.blank{background:#fff}
+.pnum{position:absolute;bottom:1.78cqw;font-size:1.68cqw;line-height:1;color:#d0d0cf;font-variant-numeric:tabular-nums}
+.pnum.left{left:2.35cqw}
+.pnum.right{right:2.35cqw}
+
+/* generated index page — sizes in cqw so it scales with the page (1pt = .168cqw) */
+.page.index{color:#000}
+.index .idx{position:absolute;left:14.1cqw;right:14.1cqw;top:7.6cqw}
+.index h2{margin:0 0 5cqw;font-size:5.4cqw;line-height:1;font-weight:500;letter-spacing:-.02em}
+.index .row{display:flex;justify-content:space-between;font-size:1.28cqw;line-height:2.1cqw}
+.index .front{margin-bottom:1.7cqw}
+.index .tier{position:relative;margin-top:4.2cqw;padding-top:1.6cqw;border-top:.1cqw solid #e6e6e4}
+.index .tier:first-of-type{margin-top:6cqw}
+.index .tname{position:absolute;left:0;top:1.3cqw;font-size:3.9cqw;line-height:1;font-weight:500;letter-spacing:-.02em}
+.index .cat{display:grid;grid-template-columns:263fr 145fr;column-gap:3.2cqw;margin-bottom:1.5cqw}
+.index .cname{text-align:right;font-size:1.28cqw;line-height:1.55cqw}
+.index .items{display:flex;flex-direction:column}
+.index .item{display:flex;justify-content:space-between;font-size:1.28cqw;line-height:1.55cqw}
+.index .code{color:#b9b9b6}
+.index .quote{position:absolute;left:17.5cqw;right:17.5cqw;bottom:6.4cqw;text-align:center;
+  font-style:italic;font-size:1.1cqw;line-height:1.5;color:#201f1c}

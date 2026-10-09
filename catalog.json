@@ -1,0 +1,698 @@
+{
+ "title": "Cottonridge 2027",
+ "pageSize": [
+  594.96,
+  841.92
+ ],
+ "tiers": [
+  {
+   "id": "base",
+   "name": "Base",
+   "tagline": "Our core level, built above standard"
+  },
+  {
+   "id": "better",
+   "name": "Better",
+   "tagline": "Added weight, easy to sell as an upgrade"
+  },
+  {
+   "id": "best",
+   "name": "Best",
+   "tagline": "Retail-quality, luxurious hoodies without the designer price tag"
+  }
+ ],
+ "products": [
+  {
+   "id": "meteor",
+   "name": "Meteor",
+   "code": "CR01 v2.0",
+   "tier": "base",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    7
+   ]
+  },
+  {
+   "id": "apollo",
+   "name": "Apollo",
+   "code": "CR02 v2.0",
+   "tier": "base",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    8
+   ]
+  },
+  {
+   "id": "apollo-k",
+   "name": "Apollo Kids",
+   "code": "CR02K v2.0",
+   "tier": "base",
+   "category": "Pullover Hoodies",
+   "kids": true,
+   "pages": [
+    35
+   ]
+  },
+  {
+   "id": "vulcan",
+   "name": "Vulcan",
+   "code": "CR10",
+   "tier": "base",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    15
+   ]
+  },
+  {
+   "id": "nebula",
+   "name": "Nebula",
+   "code": "CR04 v2.0",
+   "tier": "base",
+   "category": "Zipped Hoodies",
+   "kids": false,
+   "pages": [
+    10
+   ]
+  },
+  {
+   "id": "nebula-k",
+   "name": "Nebula Kids",
+   "code": "CR04K v2.0",
+   "tier": "base",
+   "category": "Zipped Hoodies",
+   "kids": true,
+   "pages": [
+    36
+   ]
+  },
+  {
+   "id": "solar",
+   "name": "Solar",
+   "code": "CR03 v2.0",
+   "tier": "base",
+   "category": "Sweatshirts",
+   "kids": false,
+   "pages": [
+    9
+   ]
+  },
+  {
+   "id": "solar-k",
+   "name": "Solar Kids",
+   "code": "CR03K v2.0",
+   "tier": "base",
+   "category": "Sweatshirts",
+   "kids": true,
+   "pages": [
+    35
+   ]
+  },
+  {
+   "id": "juno",
+   "name": "Juno",
+   "code": "CR08",
+   "tier": "base",
+   "category": "Full Zip Sweatshirt",
+   "kids": false,
+   "pages": [
+    14
+   ]
+  },
+  {
+   "id": "atlas",
+   "name": "Atlas",
+   "code": "CR06",
+   "tier": "base",
+   "category": "Quarter Zip Hoodies",
+   "kids": false,
+   "pages": [
+    12,
+    13
+   ]
+  },
+  {
+   "id": "astra",
+   "name": "Astra",
+   "code": "CR05",
+   "tier": "base",
+   "category": "Joggers",
+   "kids": false,
+   "pages": [
+    11
+   ]
+  },
+  {
+   "id": "astra-k",
+   "name": "Astra Kids",
+   "code": "CR05K",
+   "tier": "base",
+   "category": "Joggers",
+   "kids": true,
+   "pages": [
+    36
+   ]
+  },
+  {
+   "id": "orion",
+   "name": "Orion",
+   "code": "W72",
+   "tier": "better",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    17
+   ]
+  },
+  {
+   "id": "orion-k",
+   "name": "Orion Kids",
+   "code": "W72K",
+   "tier": "better",
+   "category": "Pullover Hoodies",
+   "kids": true,
+   "pages": [
+    37
+   ]
+  },
+  {
+   "id": "eclipse",
+   "name": "Eclipse",
+   "code": "W73",
+   "tier": "better",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    18
+   ]
+  },
+  {
+   "id": "eclipse-k",
+   "name": "Eclipse Kids",
+   "code": "W73K",
+   "tier": "better",
+   "category": "Pullover Hoodies",
+   "kids": true,
+   "pages": [
+    38
+   ]
+  },
+  {
+   "id": "cassini",
+   "name": "Cassini",
+   "code": "W88",
+   "tier": "better",
+   "category": "Zipped Hoodies",
+   "kids": false,
+   "pages": [
+    19
+   ]
+  },
+  {
+   "id": "cassini-k",
+   "name": "Cassini Kids",
+   "code": "W88K",
+   "tier": "better",
+   "category": "Zipped Hoodies",
+   "kids": true,
+   "pages": [
+    38
+   ]
+  },
+  {
+   "id": "lunar",
+   "name": "Lunar",
+   "code": "W75",
+   "tier": "better",
+   "category": "Quarter Zip Sweatshirts",
+   "kids": false,
+   "pages": [
+    20,
+    21
+   ]
+  },
+  {
+   "id": "gemini",
+   "name": "Gemini",
+   "code": "W76",
+   "tier": "best",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    23
+   ]
+  },
+  {
+   "id": "titan",
+   "name": "Titan",
+   "code": "W89PF",
+   "tier": "best",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    26
+   ]
+  },
+  {
+   "id": "saturn",
+   "name": "Saturn",
+   "code": "W29PF",
+   "tier": "best",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    28
+   ]
+  },
+  {
+   "id": "quasar",
+   "name": "Quasar",
+   "code": "W59PF v2.0",
+   "tier": "best",
+   "category": "Pullover Hoodies",
+   "kids": false,
+   "pages": [
+    30
+   ]
+  },
+  {
+   "id": "comet",
+   "name": "Comet",
+   "code": "W81PF",
+   "tier": "best",
+   "category": "Zipped Hoodies",
+   "kids": false,
+   "pages": [
+    27
+   ]
+  },
+  {
+   "id": "jupiter",
+   "name": "Jupiter",
+   "code": "W41PF",
+   "tier": "best",
+   "category": "Zipped Hoodies",
+   "kids": false,
+   "pages": [
+    29
+   ]
+  },
+  {
+   "id": "neptune",
+   "name": "Neptune",
+   "code": "W51PF v2.0",
+   "tier": "best",
+   "category": "Zipped Hoodies",
+   "kids": false,
+   "pages": [
+    31
+   ]
+  },
+  {
+   "id": "venus",
+   "name": "Venus",
+   "code": "F15",
+   "tier": "best",
+   "category": "Zipped Hoodies",
+   "kids": false,
+   "pages": [
+    32
+   ]
+  },
+  {
+   "id": "prostar",
+   "name": "Prostar",
+   "code": "CR07",
+   "tier": "best",
+   "category": "Polo Shirts",
+   "kids": false,
+   "pages": [
+    24
+   ]
+  },
+  {
+   "id": "andromeda",
+   "name": "Andromeda",
+   "code": "CR09",
+   "tier": "best",
+   "category": "T-Shirts",
+   "kids": false,
+   "pages": [
+    25
+   ]
+  }
+ ],
+ "pages": [
+  {
+   "id": "p01",
+   "src": 1,
+   "kind": "cover"
+  },
+  {
+   "id": "p02",
+   "src": 2,
+   "kind": "story"
+  },
+  {
+   "id": "p03",
+   "src": 3,
+   "kind": "offer"
+  },
+  {
+   "id": "p04",
+   "src": 4,
+   "kind": "ranges"
+  },
+  {
+   "id": "p05",
+   "src": 5,
+   "kind": "index",
+   "num": "right"
+  },
+  {
+   "id": "p06",
+   "src": 6,
+   "kind": "divider",
+   "tier": "base",
+   "num": "left"
+  },
+  {
+   "id": "p07",
+   "src": 7,
+   "kind": "product",
+   "requires": [
+    "meteor"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p08",
+   "src": 8,
+   "kind": "product",
+   "requires": [
+    "apollo"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p09",
+   "src": 9,
+   "kind": "product",
+   "requires": [
+    "solar"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p10",
+   "src": 10,
+   "kind": "product",
+   "requires": [
+    "nebula"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p11",
+   "src": 11,
+   "kind": "product",
+   "requires": [
+    "astra"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p12",
+   "src": 12,
+   "kind": "product",
+   "requires": [
+    "atlas"
+   ],
+   "spreadStart": true,
+   "num": "left"
+  },
+  {
+   "id": "p13",
+   "src": 13,
+   "kind": "product",
+   "requires": [
+    "atlas"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p14",
+   "src": 14,
+   "kind": "product",
+   "requires": [
+    "juno"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p15",
+   "src": 15,
+   "kind": "product",
+   "requires": [
+    "vulcan"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p16",
+   "src": 16,
+   "kind": "divider",
+   "tier": "better",
+   "num": "left"
+  },
+  {
+   "id": "p17",
+   "src": 17,
+   "kind": "product",
+   "requires": [
+    "orion"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p18",
+   "src": 18,
+   "kind": "product",
+   "requires": [
+    "eclipse"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p19",
+   "src": 19,
+   "kind": "product",
+   "requires": [
+    "cassini"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p20",
+   "src": 20,
+   "kind": "product",
+   "requires": [
+    "lunar"
+   ],
+   "spreadStart": true,
+   "num": "left"
+  },
+  {
+   "id": "p21",
+   "src": 21,
+   "kind": "product",
+   "requires": [
+    "lunar"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p22",
+   "src": 22,
+   "kind": "divider",
+   "tier": "best",
+   "num": "left"
+  },
+  {
+   "id": "p23",
+   "src": 23,
+   "kind": "product",
+   "requires": [
+    "gemini"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p24",
+   "src": 24,
+   "kind": "product",
+   "requires": [
+    "prostar"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p25",
+   "src": 25,
+   "kind": "product",
+   "requires": [
+    "andromeda"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p26",
+   "src": 26,
+   "kind": "product",
+   "requires": [
+    "titan"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p27",
+   "src": 27,
+   "kind": "product",
+   "requires": [
+    "comet"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p28",
+   "src": 28,
+   "kind": "product",
+   "requires": [
+    "saturn"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p29",
+   "src": 29,
+   "kind": "product",
+   "requires": [
+    "jupiter"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p30",
+   "src": 30,
+   "kind": "product",
+   "requires": [
+    "quasar"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p31",
+   "src": 31,
+   "kind": "product",
+   "requires": [
+    "neptune"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p32",
+   "src": 32,
+   "kind": "product",
+   "requires": [
+    "venus"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p33",
+   "src": 33,
+   "kind": "extra",
+   "tier": "best",
+   "num": "right"
+  },
+  {
+   "id": "p34",
+   "src": 34,
+   "kind": "divider",
+   "kids": true,
+   "num": "left"
+  },
+  {
+   "id": "p35",
+   "src": 35,
+   "kind": "product",
+   "requires": [
+    "apollo-k",
+    "solar-k"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p36",
+   "src": 36,
+   "kind": "product",
+   "requires": [
+    "nebula-k",
+    "astra-k"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p37",
+   "src": 37,
+   "kind": "product",
+   "requires": [
+    "orion-k"
+   ],
+   "num": "right"
+  },
+  {
+   "id": "p38",
+   "src": 38,
+   "kind": "product",
+   "requires": [
+    "eclipse-k",
+    "cassini-k"
+   ],
+   "num": "left"
+  },
+  {
+   "id": "p39",
+   "src": 39,
+   "kind": "cord",
+   "num": "right"
+  },
+  {
+   "id": "p40",
+   "src": 40,
+   "kind": "back"
+  }
+ ],
+ "frontIndex": [
+  {
+   "label": "Our story",
+   "src": 2
+  },
+  {
+   "label": "What we offer",
+   "src": 3
+  },
+  {
+   "label": "Our ranges",
+   "src": 4
+  }
+ ],
+ "backIndex": [
+  {
+   "label": "Cord change",
+   "src": 39
+  }
+ ]
+}

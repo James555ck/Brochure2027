@@ -1,0 +1,20 @@
+# Cottonridge 2027 Brochure
+
+A flipbook brochure where the viewer chooses which products are in it. Remove a product and its pages drop out,
+the remaining pages renumber and the index rebuilds itself. Everything runs in the browser.
+
+Built from the leavers flipbook (`Flipbookshare`), reusing its page-flip engine (StPageFlip, MIT) with clean app code.
+
+## How it works
+- `pages/pNN.jpg` - each source PDF page rendered at 150 dpi, with the printed page number removed.
+- `catalog.json` - tiers, categories, products and which pages each product owns.
+  Pages carry a `requires` list (shown if *any* listed product is kept), so shared pages (kids) work.
+- `app.js` - `brochure.setKept([...productIds])` rebuilds the book. Also `?kept=meteor,atlas` in the URL.
+  Two-page products (Atlas, Lunar) are kept on a left/right spread with blank fillers where needed.
+  The index page and page numbers are generated live.
+- `tools/build_pages.py` - regenerates `pages/` and `catalog.json` from the PDF (needs `pymupdf`).
+
+```
+python tools/build_pages.py "path/to/Brochure.pdf"
+python -m http.server 8027      # then open http://localhost:8027
+```
