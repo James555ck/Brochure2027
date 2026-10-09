@@ -1,6 +1,6 @@
 """Render the source PDF into per-page JPGs and write catalog.json.
 
-Usage:  python tools/build_pages.py "<path to Brochure PDF>"
+Usage:  python tools/build_pages.py "<path to Brochure PDF>" ["<PDF whose page 1 replaces the cover>"]
 
 - Printed page numbers (real text in the PDF) are removed from the renders; the
   viewer draws live numbers instead, so they stay right after pages are removed.
@@ -81,8 +81,9 @@ INDEX_PAGE = 5
 LIVE = False
 
 
-def main(pdf_path: str) -> None:
+def main(pdf_path: str, cover_path: str | None = None) -> None:
     src = pymupdf.open(pdf_path)
+    cover = pymupdf.open(cover_path) if cover_path else None
     out = ROOT / "pages"
     (out / "thumb").mkdir(parents=True, exist_ok=True)
 
@@ -93,7 +94,7 @@ def main(pdf_path: str) -> None:
 
     pages_meta = []
     for n in range(1, len(src) + 1):
-        page = src[n - 1]
+        page = cover[0] if (n == 1 and cover) else src[n - 1]
         meta = {"id": f"p{n:02d}", "src": n}
         if n in FIXED:
             meta["kind"] = FIXED[n]
@@ -166,6 +167,6 @@ def main(pdf_path: str) -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) not in (2, 3):
         sys.exit(__doc__)
-    main(sys.argv[1])
+    main(*sys.argv[1:])
