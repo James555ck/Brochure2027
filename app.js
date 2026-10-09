@@ -105,7 +105,7 @@
     const here = flip && layout[flip.getCurrentPageIndex()];
     const hereSrc = here && !here.blank ? here.src : null;
 
-    wheelReset();
+    resetGo();
     if (flip) { try { flip.destroy(); } catch (e) { /* already gone */ } flip = null; }
     zoomer.innerHTML = '';
 
@@ -166,9 +166,11 @@
     book.style.top = Math.floor((wrap.clientHeight - h) / 2) + 'px';
   }
 
-  function update() {
-    if (!flip) return;
-    const i = flip.getCurrentPageIndex(), n = flip.getPageCount();
+  function update() { if (flip) applyState(flip.getCurrentPageIndex()); }
+
+  /** Button states and cover/back-cover centring for the spread that starts at page index i. */
+  function applyState(i) {
+    const n = flip.getPageCount();
     const landscape = flip.getOrientation() === 'landscape';
     const last = landscape ? n - 2 : n - 1;
     prevBtn.disabled = i <= 0;
@@ -222,65 +224,62 @@
   wrap.addEventListener('pointerup', endDrag);
   wrap.addEventListener('pointercancel', endDrag);
 
-  // scroll folds the page continuously (like dragging the corner); ctrl/cmd + scroll zooms
-  const wheel = { on: false, dir: 0, target: 0, shown: 0, busyUntil: 0, idle: 0, raf: 0, startX: 0, y: 0, travel: 0 };
-
-  function wheelReset() {
-    cancelAnimationFrame(wheel.raf);
-    clearTimeout(wheel.idle);
-    wheel.on = false; wheel.target = wheel.shown = 0; wheel.raf = 0;
-  }
-  const wheelPos = () => ({ x: wheel.startX - wheel.dir * wheel.shown * wheel.travel, y: wheel.y - wheel.shown * wheel.travel * 0.08 });
-
-  function wheelFrame() {
-    wheel.raf = 0;
-    if (!wheel.on || !flip) return;
-    wheel.shown += (wheel.target - wheel.shown) * 0.35;          // ease towards the wheel
-    if (Math.abs(wheel.target - wheel.shown) < 0.002) wheel.shown = wheel.target;
-    flip.userMove(wheelPos(), false);
-    if (wheel.shown >= 0.97 && wheel.target >= 0.97) { wheelRelease(); return; }   // fully across: finish the turn
-    if (wheel.shown !== wheel.target) wheel.raf = requestAnimationFrame(wheelFrame);
-  }
-
-  function wheelRelease() {
-    if (!wheel.on) return;
-    const pos = wheelPos();
-    wheelReset();
-    flip.userStop(pos, false);                                  // engine completes or reverts the fold
-    wheel.busyUntil = Date.now() + FLIP_MS + 30;
-  }
-
+  // scroll turns pages, ported from the leavers flipbook: wheel movement is summed to a threshold,
+  // then one turn fires; turns requested mid-flip (up to 2) are queued and played straight after.
+  let wheelAcc = 0, wheelIdle = 0;
   wrap.addEventListener('wheel', (e) => {
-    if (e.ctrlKey || e.metaKey) { e.preventDefault(); setZoom(zoom - e.deltaY * 0.005); return; }
     e.preventDefault();
+    if (e.ctrlKey || e.metaKey) { setZoom(zoom * Math.exp(-e.deltaY * 0.01)); return; }
     if (zoom > 1) { panX -= e.deltaX; panY -= e.deltaY; applyZoom(); return; }
-    if (!flip) return;
-    let d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-    d *= e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? pageH : 1;
-    if (!d || Date.now() < wheel.busyUntil) return;
-
-    if (!wheel.on) {
-      const dir = d > 0 ? 1 : -1;
-      if (dir > 0 ? nextBtn.disabled : prevBtn.disabled) return;
-      const W = dims.pw * (dims.portrait ? 1 : 2);
-      Object.assign(wheel, { on: true, dir, target: 0, shown: 0, travel: W * 0.96, startX: dir > 0 ? W - 2 : 2, y: dims.ph - 2 });
-      flip.startUserTouch({ x: wheel.startX, y: wheel.y });
+    wheelAcc += Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    clearTimeout(wheelIdle);
+    wheelIdle = setTimeout(() => { wheelAcc = 0; }, 120);
+    if (Math.abs(wheelAcc) >= 50) {
+      const dir = wheelAcc > 0 ? 1 : -1;
+      wheelAcc = 0;
+      go(dir);
     }
-    // pushing the other way pulls the page back
-    wheel.target = Math.max(0, Math.min(1, wheel.target + (d * wheel.dir) / (dims.pw * 0.8)));
-    if (!wheel.raf) wheel.raf = requestAnimationFrame(wheelFrame);
-    clearTimeout(wheel.idle);
-    wheel.idle = setTimeout(wheelRelease, 150);                 // wheel stopped: let go
   }, { passive: false });
 
+  // ---- turning pages ----------------------------------------------------------
+  let busy = false, queued = 0, queuedDir = 0, busyTimer = 0;
+
+  function resetGo() { clearTimeout(busyTimer); busy = false; queued = 0; queuedDir = 0; wheelAcc = 0; }
+
+  function go(dir) {
+    if (!flip) return;
+    if (busy) {                                           // remember up to two turns for when this one lands
+      if (queuedDir && queuedDir !== dir) queued = 0;
+      queuedDir = dir;
+      queued = Math.min(queued + 1, 2);
+      return;
+    }
+    const landscape = flip.getOrientation() === 'landscape', n = flip.getPageCount();
+    const last = landscape ? n - 2 : n - 1, cur = flip.getCurrentPageIndex();
+    const target = Math.max(0, Math.min(last, cur + dir * (landscape ? 2 : 1)));
+    if (target === cur) { queued = 0; return; }
+    busy = true;
+    busyTimer = setTimeout(finishGo, FLIP_MS * 0.8);      // free again a little before the animation ends
+    applyState(target);                                   // start centring the cover/back now, not after
+    if (dir > 0) flip.flipNext(); else flip.flipPrev();
+  }
+
+  function finishGo() {
+    if (!flip) return;
+    if (flip.getState() !== 'read') { busyTimer = setTimeout(finishGo, 16); return; }
+    applyState(flip.getCurrentPageIndex());
+    busy = false;
+    if (queued > 0) { const d = queuedDir; queued--; if (!queued) queuedDir = 0; go(d); }
+  }
+
   // ---- navigation -------------------------------------------------------------
-  prevBtn.onclick = () => flip && flip.flipPrev();
-  nextBtn.onclick = () => flip && flip.flipNext();
+  prevBtn.onclick = () => go(-1);
+  nextBtn.onclick = () => go(1);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { closeAll(); return; }
     if (!flip || /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
-    if (e.key === 'ArrowRight') flip.flipNext();
-    else if (e.key === 'ArrowLeft') flip.flipPrev();
+    if (e.key === 'ArrowRight') go(1);
+    else if (e.key === 'ArrowLeft') go(-1);
   });
 
   // rebuild at the new size when the stage changes (window resize, fonts settling, phone rotation)
