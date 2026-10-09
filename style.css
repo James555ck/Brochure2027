@@ -78,7 +78,7 @@ button{font:inherit;color:inherit}
 .bookwrap.panning{cursor:grabbing}
 #zoomer{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform}
 .bookwrap.zoomed #zoomer{pointer-events:none}
-#book{position:absolute;touch-action:pan-y;transition:transform .65s cubic-bezier(.45,0,.25,1)}
+#book{position:absolute;touch-action:pan-y;transition:transform .48s cubic-bezier(.45,0,.25,1)}
 .nav{flex:0 0 auto;z-index:2;width:44px;height:44px;border:0;border-radius:50%;cursor:pointer;
   background:rgba(0,0,0,.35);color:#fff;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center}
 .nav:hover:not(:disabled){background:rgba(0,0,0,.5)}
@@ -109,6 +109,7 @@ button{font:inherit;color:inherit}
 .page{background:#fff;overflow:hidden;container-type:inline-size;position:relative;box-shadow:0 8px 28px rgba(0,0,0,.22)}
 .page img{width:100%;height:100%;display:block;object-fit:cover;-webkit-user-drag:none;user-select:none}
 .page.blank{background:#fff}
+.page.edge{background:none;box-shadow:none;pointer-events:none}
 .pnum{position:absolute;bottom:1.78cqw;font-size:1.68cqw;line-height:1;color:#d0d0cf;font-variant-numeric:tabular-nums}
 .pnum.left{left:2.35cqw}
 .pnum.right{right:2.35cqw}

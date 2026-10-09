@@ -17,7 +17,9 @@
   let catalog = null;
   let kept = new Set();
   let flip = null;
-  let layout = [];          // final ordered pages (source page objects or { blank: true })
+  let body = [];            // visible pages in order, fillers included
+  let layout = [];          // body plus transparent end blanks (landscape) - what the engine shows
+  let dims = { pw: 0, ph: 0, portrait: false };
   let pageW = 595, pageH = 842;
 
   // ---- page list --------------------------------------------------------------
@@ -51,13 +53,13 @@
   function pageEl(p, pos, posOfSrc) {
     const el = document.createElement('div');
     el.className = 'page';
-    if (p.kind === 'cover' || p.kind === 'back') el.dataset.density = 'hard';
     if (p.blank) { el.classList.add('blank'); return el; }
     if (p.kind === 'index') { el.classList.add('index'); el.innerHTML = indexHTML(posOfSrc); }
     else {
       const img = document.createElement('img');
       img.src = `pages/${p.id}.jpg`;
       img.alt = '';
+      img.decoding = 'async';
       img.draggable = false;
       el.appendChild(img);
     }
@@ -106,48 +108,57 @@
     if (flip) { try { flip.destroy(); } catch (e) { /* already gone */ } flip = null; }
     zoomer.innerHTML = '';
 
-    layout = arrange();
+    dims = measure();
+    body = arrange();
     const posOfSrc = {};
-    layout.forEach((p, i) => { if (!p.blank) posOfSrc[p.src] = i + 1; });
+    body.forEach((p, i) => { if (!p.blank) posOfSrc[p.src] = i + 1; });
+    // Landscape: a transparent blank either side puts the cover/back cover on a single page
+    // (as the leavers flipbook does), so they turn like any other page instead of as a stiff board.
+    layout = dims.portrait ? body : [{ blank: true, edge: true }, ...body, { blank: true, edge: true }];
+    const els = layout.map((p) => {
+      const i = body.indexOf(p);
+      const el = pageEl(p, i + 1, posOfSrc);
+      if (p.edge) el.classList.add('edge');
+      return el;
+    });
 
-    // The engine sizes itself from its container's parent, so give it a frame we control.
+    // Fixed pixel size, like the leavers flipbook: no re-layout while flipping.
     const book = document.createElement('div');
     book.id = 'book';
     const host = document.createElement('div');
     book.appendChild(host);
     zoomer.appendChild(book);
-    const els = layout.map((p, i) => pageEl(p, i + 1, posOfSrc));
-
-    fit(book);
+    place(book);
     flip = new St.PageFlip(host, {
-      width: pageW, height: pageH, size: 'stretch',
-      minWidth: 200, maxWidth: 1400, minHeight: 280, maxHeight: 2000,
-      showCover: true, usePortrait: true, mobileScrollSupport: false,
-      maxShadowOpacity: 0.35, drawShadow: true, flippingTime: 700, startZIndex: 0,
+      width: dims.pw, height: dims.ph, size: 'fixed',
+      minWidth: 100, maxWidth: 2000, minHeight: 140, maxHeight: 2800,
+      showCover: false, usePortrait: true, mobileScrollSupport: false,
+      maxShadowOpacity: 0.3, drawShadow: true, flippingTime: FLIP_MS, useMouseEvents: true,
     });
     flip.loadFromHTML(els);
     flip.on('flip', update);
     flip.on('changeOrientation', update);
 
     if (hereSrc) {
-      let idx = layout.findIndex((p) => !p.blank && p.src >= hereSrc);
-      if (idx < 0) idx = layout.length - 1;
-      if (idx > 0) flip.turnToPage(idx);
+      const idx = layout.findIndex((p) => !p.blank && p.src >= hereSrc);
+      if (idx > 1) flip.turnToPage(idx);
     }
     update();
     renderPickerState();
     status.hidden = true;
   }
 
-  /** Size the book frame to the largest spread (or single page on narrow screens) that fits. */
-  function fit(book) {
-    book = book || $('book');
-    if (!book) return;
+  /** Largest page size whose spread (or single page on narrow screens) fits the stage. */
+  function measure() {
     const aw = wrap.clientWidth - 8, ah = wrap.clientHeight - 8;
     const portrait = aw < 640 || aw / ah < 1.0;
     const ratio = (portrait ? 1 : 2) * pageW / pageH;
-    let w = Math.min(aw, ah * ratio), h = w / ratio;
-    w = Math.floor(w); h = Math.floor(h);
+    const w = Math.min(aw, ah * ratio);
+    return { pw: Math.floor(w / (portrait ? 1 : 2)), ph: Math.floor(w / ratio), portrait };
+  }
+
+  function place(book) {
+    const w = dims.pw * (dims.portrait ? 1 : 2), h = dims.ph;
     book.style.width = w + 'px';
     book.style.height = h + 'px';
     book.style.left = Math.floor((wrap.clientWidth - w) / 2) + 'px';
@@ -157,18 +168,20 @@
   function update() {
     if (!flip) return;
     const i = flip.getCurrentPageIndex(), n = flip.getPageCount();
+    const landscape = flip.getOrientation() === 'landscape';
+    const last = landscape ? n - 2 : n - 1;
     prevBtn.disabled = i <= 0;
-    nextBtn.disabled = i >= n - 1;
+    nextBtn.disabled = i >= last;
     // Cover and back cover sit alone on one half of the spread: slide the book to centre them.
     const book = $('book');
-    const landscape = flip.getOrientation() === 'landscape';
     let shift = 0;
     if (landscape && i === 0) shift = -25;
-    else if (landscape && i >= n - 1 && n % 2 === 0) shift = 25;
+    else if (landscape && i >= last) shift = 25;
     if (book) book.style.transform = `translateX(${shift}%)`;
   }
 
   // ---- zoom -------------------------------------------------------------------
+  const FLIP_MS = 480;
   const Z_MIN = 1, Z_MAX = 3;
   let zoom = 1, panX = 0, panY = 0;
 
@@ -215,8 +228,8 @@
     if (zoom > 1) { panX -= e.deltaX; panY -= e.deltaY; applyZoom(); e.preventDefault(); return; }
     e.preventDefault();
     const now = Date.now();
-    if (!flip || now < wheelLock || Math.abs(e.deltaY) + Math.abs(e.deltaX) < 20) return;
-    wheelLock = now + 700;
+    if (!flip || now < wheelLock || Math.abs(e.deltaY) + Math.abs(e.deltaX) < 4) return;
+    wheelLock = now + FLIP_MS + 40;
     (e.deltaY + e.deltaX > 0) ? flip.flipNext() : flip.flipPrev();
   }, { passive: false });
 
@@ -230,11 +243,16 @@
     else if (e.key === 'ArrowLeft') flip.flipPrev();
   });
 
-  // refit whenever the stage changes size (window resize, fonts settling, phone rotation)
+  // rebuild at the new size when the stage changes (window resize, fonts settling, phone rotation)
   let rz;
   new ResizeObserver(() => {
     clearTimeout(rz);
-    rz = setTimeout(() => { if (flip) { fit(); flip.update(); update(); applyZoom(); } }, 100);
+    rz = setTimeout(() => {
+      if (!flip) return;
+      const d = measure();
+      if (d.portrait !== dims.portrait || Math.abs(d.pw - dims.pw) > 2 || Math.abs(d.ph - dims.ph) > 2) buildBook();
+      applyZoom();
+    }, 150);
   }).observe(wrap);
 
   // ---- step cards -------------------------------------------------------------
