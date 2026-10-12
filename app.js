@@ -110,6 +110,7 @@
     zoomer.innerHTML = '';
 
     dims = measure();
+    if (dims.pw < 50 || dims.ph < 50) { status.hidden = false; return; }   // stage not laid out yet: the resize observer retries
     body = arrange();
     const posOfSrc = {};
     body.forEach((p, i) => { if (!p.blank) posOfSrc[p.src] = i + 1; });
@@ -287,7 +288,7 @@
   new ResizeObserver(() => {
     clearTimeout(rz);
     rz = setTimeout(() => {
-      if (!flip) return;
+      if (!flip) { if (catalog) buildBook(); return; }            // first build was skipped (stage had no size yet)
       const d = measure();
       if (d.portrait !== dims.portrait || Math.abs(d.pw - dims.pw) > 2 || Math.abs(d.ph - dims.ph) > 2) buildBook();
       applyZoom();
