@@ -15,6 +15,7 @@
   const prevBtn = $('prev'), nextBtn = $('next');
 
   let catalog = null;
+  let base = '';              // folder of the brochure being shown, e.g. brochures/proof/
   let kept = new Set();
   let flip = null;
   let body = [];            // visible pages in order, fillers included
@@ -55,7 +56,7 @@
     el.className = 'page';
     if (p.blank) { el.classList.add('blank'); return el; }
     const img = document.createElement('img');
-    img.src = `pages/${p.id}.jpg?v=${catalog.build}`;
+    img.src = `${base}pages/${p.id}.jpg?v=${catalog.build}`;
     img.alt = '';
     img.decoding = 'async';
     img.draggable = false;
@@ -309,7 +310,7 @@
   $('stage').addEventListener('pointerdown', () => closeAll());
 
   // ---- product picker ---------------------------------------------------------
-  const thumb = (x) => `pages/thumb/p${pad2(x.pages[0])}.jpg?v=${catalog.build}`;
+  const thumb = (x) => `${base}pages/thumb/p${pad2(x.pages[0])}.jpg?v=${catalog.build}`;
   let rebuildTimer;
 
   function buildPicker() {
@@ -368,6 +369,14 @@
     $('sub1').textContent = `${n} of ${total} products · ${pages} pages`;
   }
 
+  /** Header pills to move between brochures (only shown when there is more than one). */
+  function renderSwitcher(list, activeId) {
+    const nav = $('switch');
+    if (!nav || list.length < 2) return;
+    nav.innerHTML = list.map((b) =>
+      `<a class="pill${b.id === activeId ? ' on' : ''}" href="?b=${encodeURIComponent(b.id)}">${esc(b.label)}</a>`).join('');
+  }
+
   // ---- api / init -------------------------------------------------------------
   function setKept(ids) {
     const valid = new Set(catalog.products.map((p) => p.id));
@@ -376,8 +385,16 @@
   }
 
   async function init() {
+    let list = [];
     try {
-      catalog = await (await fetch('catalog.json?t=' + Date.now(), { cache: 'no-store' })).json();
+      list = await (await fetch('brochures.json?t=' + Date.now(), { cache: 'no-store' })).json();
+    } catch (e) { /* single-brochure fallback below */ }
+    const want = new URLSearchParams(location.search).get('b');
+    const cur = list.find((b) => b.id === want) || list[0] || { id: '2026ss' };
+    base = `brochures/${cur.id}/`;
+    renderSwitcher(list, cur.id);
+    try {
+      catalog = await (await fetch(base + 'catalog.json?t=' + Date.now(), { cache: 'no-store' })).json();
     } catch (e) {
       status.textContent = 'Could not load the brochure data.';
       return;

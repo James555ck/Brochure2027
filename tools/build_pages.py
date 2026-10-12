@@ -1,6 +1,9 @@
 """Render the source PDF into per-page JPGs and write catalog.json.
 
-Usage:  python tools/build_pages.py "<path to Brochure PDF>" ["<PDF whose page 1 replaces the cover>"]
+Usage:  python tools/build_pages.py "<path to Brochure PDF>" <brochure-id> ["<PDF whose page 1 replaces the cover>"]
+
+Writes brochures/<brochure-id>/pages/*.jpg and brochures/<brochure-id>/catalog.json.
+List the brochure in brochures.json so the viewer offers it.
 
 - Printed page numbers (real text in the PDF) are removed from the renders; the
   viewer draws live numbers instead, so they stay right after pages are removed.
@@ -81,10 +84,11 @@ INDEX_PAGE = 5
 LIVE = False
 
 
-def main(pdf_path: str, cover_path: str | None = None) -> None:
+def main(pdf_path: str, brochure_id: str, cover_path: str | None = None) -> None:
+    root = ROOT / "brochures" / brochure_id
     src = pymupdf.open(pdf_path)
     cover = pymupdf.open(cover_path) if cover_path else None
-    out = ROOT / "pages"
+    out = root / "pages"
     (out / "thumb").mkdir(parents=True, exist_ok=True)
 
     owners: dict[int, list[str]] = {}
@@ -162,11 +166,11 @@ def main(pdf_path: str, cover_path: str | None = None) -> None:
         "frontIndex": [{"label": l, "src": p} for l, p in FRONT_INDEX],
         "backIndex": [{"label": l, "src": p} for l, p in BACK_INDEX],
     }
-    (ROOT / "catalog.json").write_text(json.dumps(catalog, indent=1), encoding="utf-8")
+    (root / "catalog.json").write_text(json.dumps(catalog, indent=1), encoding="utf-8")
     print("catalog.json written:", len(PRODUCTS), "products,", len(pages_meta), "pages")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) not in (2, 3):
+    if len(sys.argv) not in (3, 4):
         sys.exit(__doc__)
     main(*sys.argv[1:])
