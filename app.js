@@ -390,7 +390,7 @@
       list = await (await fetch('brochures.json?t=' + Date.now(), { cache: 'no-store' })).json();
     } catch (e) { /* single-brochure fallback below */ }
     const want = new URLSearchParams(location.search).get('b');
-    const cur = list.find((b) => b.id === want) || list[0] || { id: '2026ss' };
+    const cur = list.find((b) => b.id === want) || list[0] || { id: '2027' };
     base = `brochures/${cur.id}/`;
     renderSwitcher(list, cur.id);
     try {
