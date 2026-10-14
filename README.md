@@ -13,10 +13,15 @@ switched off), Our ranges, Any cord. Any hood, Cord options. Products: every gar
 Everything that depends on page order is redrawn straight away: the index, the printed page numbers, and the "Kids version
 available on page N", "Adults version on page N" and "for more info see page N" notes (a note disappears when the page it points to is out).
 
-Blank pages keep every page on the side it has in the design: each range's divider (Base, Better, Best, Kids), the two-page
-products (Atlas, Lunar), the cord page and the back page all open on a left-hand page, so if removing products leaves an odd
-page before one of them, a blank page is added at the back of that range. The index always sits on a right-hand page (a blank
-goes in straight after the cover if removing pages would push it left).
+Single-page products flip their layout to suit the page they land on: the design has two styles (photos left / details right,
+and the reverse), and `tools/render_html.js` renders both (`pNN.jpg` and a mirrored twin `pNNm.jpg`: photos mirror, the details
+column, badges and QR shift as a block, nothing is flipped). The viewer picks the version that matches the side the page ends up on,
+and moves the "see page N" notes with the details.
+
+Blank pages are only added where a page genuinely cannot change side: each range's divider (Base, Better, Best, Kids), the
+two-page products (Atlas, Lunar), the cord page and the back page open on a left-hand page, and the index sits on a right-hand page.
+If removing products leaves an odd page before one of them, one blank goes in before it (at the back of the range, or before
+a two-page product).
 
 **3 Download** - not built yet.
 
@@ -33,7 +38,7 @@ goes in straight after the cover if removing pages would push it left).
   To change a front cover, replace the file; to go back to the design file's cover, delete it.
 
 ## How it works
-- `brochures/2027/pages/` - `pNN.jpg` (interior), `p01-<style>.jpg` / `p44-<style>.jpg` (cover / back per style), `thumb/` (picker tiles).
+- `brochures/2027/pages/` - `pNN.jpg` (interior) and `pNNm.jpg` (mirrored twins of the single-page products), `p01-<style>.jpg` / `p44-<style>.jpg` (cover / back per style), `thumb/` (picker tiles).
 - `brochures/2027/catalog.json` - products, which pages each owns, the options, the notes, the defaults and the styles.
 - `app.js` - `kept` (what is in the brochure) and `custom` (the customer's details) drive everything. `brochure.setKept([...])`
   or `?kept=meteor,atlas` rebuilds the book. Two-page products (Atlas, Lunar) stay on a left/right spread, with a blank page

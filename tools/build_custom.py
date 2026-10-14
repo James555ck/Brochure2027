@@ -86,6 +86,8 @@ def main(folder, brochure_id="2027", skip_render=False):
         for pid, *_r, pages in bp.PRODUCTS:
             if len(pages) == 2 and n == pages[0]:
                 meta["spreadStart"] = True
+        if str(n) in render.get("layouts", {}):                    # single-page product: has a mirrored twin (pNNm.jpg)
+            meta["layout"] = render["layouts"][str(n)]
         num = render["nums"].get(str(n))
         if num:
             meta["num"], meta["numColor"] = num["side"], num["color"]

@@ -4,7 +4,7 @@
   595.28,
   841.89
  ],
- "build": "1791979506",
+ "build": "1791980387",
  "live": true,
  "variants": [
   {
@@ -494,6 +494,7 @@
    "requires": [
     "meteor"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -504,6 +505,7 @@
    "requires": [
     "apollo"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -514,6 +516,7 @@
    "requires": [
     "solar"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -524,6 +527,7 @@
    "requires": [
     "nebula"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -534,6 +538,7 @@
    "requires": [
     "astra"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -565,6 +570,7 @@
    "requires": [
     "juno"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -575,6 +581,7 @@
    "requires": [
     "vulcan"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -593,6 +600,7 @@
    "requires": [
     "orion"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -603,6 +611,7 @@
    "requires": [
     "eclipse"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -613,6 +622,7 @@
    "requires": [
     "cassini"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -623,6 +633,7 @@
    "requires": [
     "odyssey"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -633,6 +644,7 @@
    "requires": [
     "horizon"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -672,6 +684,7 @@
    "requires": [
     "gemini"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -682,6 +695,7 @@
    "requires": [
     "prostar"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -692,6 +706,7 @@
    "requires": [
     "andromeda"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -702,6 +717,7 @@
    "requires": [
     "titan"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -712,6 +728,7 @@
    "requires": [
     "comet"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -722,6 +739,7 @@
    "requires": [
     "saturn"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -732,6 +750,7 @@
    "requires": [
     "jupiter"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -742,6 +761,7 @@
    "requires": [
     "quasar"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -752,6 +772,7 @@
    "requires": [
     "neptune"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -762,6 +783,7 @@
    "requires": [
     "venus"
    ],
+   "layout": "L",
    "num": "left",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -810,6 +832,7 @@
    "requires": [
     "orion-k"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -831,6 +854,7 @@
    "requires": [
     "andromeda-k"
    ],
+   "layout": "R",
    "num": "right",
    "numColor": "rgb(153, 153, 153)"
   },
@@ -865,7 +889,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 37
+   "target": 37,
+   "xm": 382.7
   },
   {
    "page": 9,
@@ -875,7 +900,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 37
+   "target": 37,
+   "xm": 28.3
   },
   {
    "page": 10,
@@ -885,7 +911,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 38
+   "target": 38,
+   "xm": 382.7
   },
   {
    "page": 11,
@@ -895,7 +922,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 38
+   "target": 38,
+   "xm": 28.3
   },
   {
    "page": 17,
@@ -905,7 +933,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 39
+   "target": 39,
+   "xm": 28.3
   },
   {
    "page": 18,
@@ -915,7 +944,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 40
+   "target": 40,
+   "xm": 382.7
   },
   {
    "page": 19,
@@ -925,7 +955,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 40
+   "target": 40,
+   "xm": 28.3
   },
   {
    "page": 27,
@@ -935,7 +966,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 41
+   "target": 41,
+   "xm": 28.3
   },
   {
    "page": 37,
@@ -985,7 +1017,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
-   "target": 17
+   "target": 17,
+   "xm": 28.3
   },
   {
    "page": 40,
@@ -1015,7 +1048,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
-   "target": 27
+   "target": 27,
+   "xm": 28.3
   },
   {
    "page": 42,

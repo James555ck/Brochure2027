@@ -178,7 +178,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 37
+   "target": 37,
+   "xm": 382.7
   },
   {
    "page": 9,
@@ -188,7 +189,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 37
+   "target": 37,
+   "xm": 28.3
   },
   {
    "page": 10,
@@ -198,7 +200,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 38
+   "target": 38,
+   "xm": 382.7
   },
   {
    "page": 11,
@@ -208,7 +211,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 38
+   "target": 38,
+   "xm": 28.3
   },
   {
    "page": 17,
@@ -218,7 +222,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 39
+   "target": 39,
+   "xm": 28.3
   },
   {
    "page": 18,
@@ -228,7 +233,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 40
+   "target": 40,
+   "xm": 382.7
   },
   {
    "page": 19,
@@ -238,7 +244,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 40
+   "target": 40,
+   "xm": 28.3
   },
   {
    "page": 27,
@@ -248,7 +255,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
-   "target": 41
+   "target": 41,
+   "xm": 28.3
   },
   {
    "page": 37,
@@ -298,7 +306,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
-   "target": 17
+   "target": 17,
+   "xm": 28.3
   },
   {
    "page": 40,
@@ -328,7 +337,8 @@
    "size": 8,
    "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
-   "target": 27
+   "target": 27,
+   "xm": 28.3
   },
   {
    "page": 42,
@@ -355,5 +365,35 @@
   "email": "salesteam@cottonridge.co.uk",
   "phone": "01543 278 558",
   "web": "cottonridge.co.uk"
+ },
+ "layouts": {
+  "7": "R",
+  "8": "L",
+  "9": "R",
+  "10": "L",
+  "11": "R",
+  "14": "L",
+  "15": "R",
+  "17": "R",
+  "18": "L",
+  "19": "R",
+  "20": "L",
+  "21": "R",
+  "25": "R",
+  "26": "L",
+  "27": "R",
+  "28": "L",
+  "29": "R",
+  "30": "L",
+  "31": "R",
+  "32": "L",
+  "33": "R",
+  "34": "L",
+  "39": "R",
+  "41": "R"
+ },
+ "mirror": {
+  "dText": -354.39,
+  "dQr": -355
  }
 }

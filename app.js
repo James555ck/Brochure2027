@@ -40,12 +40,13 @@
   }
 
   /** Pages that must open on a left-hand (even) position, as they do in the design: two-page products (so the photo is
-   *  on the left and the details on the right), each range's divider (Base, Better, Best, Kids), the cord pages and the back page. */
+   *  on the left and the details on the right), each range's divider (Base, Better, Best, Kids), the cord page and the back
+   *  page. Single-page products are not here: they mirror themselves to suit whichever side they land on. */
   const startsLeft = (p) => p.spreadStart || p.kind === 'divider' || p.kind === 'back' || p.opt === 'cord';
 
   /** Visible pages in order. Whenever a page that must start on the left would land on the right, a blank page goes in
    *  before it: so when removing products leaves a range with an odd number of pages, the blank ends up at the back of
-   *  that range and everything after it stays on the side it has in the design. The index must sit on a right-hand
+   *  that range (or before a two-page product) and every divider stays on the side it has in the design. The index must sit on a right-hand
    *  page: if removing pages would put it on the left, a blank goes in straight after the cover instead. */
   function arrange() {
     const lay = (frontBlank) => {
@@ -69,13 +70,17 @@
 
   const variantOf = () => (catalog.variants || []).find((v) => v.id === custom.variant) || null;
   const pageFile = (p) => ((p.kind === 'cover' || p.kind === 'back') && variantOf() ? `${p.id}-${custom.variant}` : p.id);
+  /** Single-page products were designed for one side (p.layout: 'R' = photos left / details right, 'L' = the opposite).
+   *  Left-hand pages sit at even positions. If the page lands on the other side, use its mirrored twin (pNNm.jpg). */
+  const isMirrored = (p, pos) => !!p.layout && p.layout !== (pos % 2 === 0 ? 'L' : 'R');
 
   function pageEl(p, pos, posOfSrc) {
     const el = document.createElement('div');
     el.className = 'page';
     if (p.blank) { el.classList.add('blank'); return el; }
     const img = document.createElement('img');
-    img.src = `${base}pages/${pageFile(p)}.jpg?v=${catalog.build}`;
+    const mirrored = isMirrored(p, pos);
+    img.src = `${base}pages/${pageFile(p)}${mirrored ? 'm' : ''}.jpg?v=${catalog.build}`;
     img.alt = '';
     img.decoding = 'async';
     img.draggable = false;
@@ -94,18 +99,19 @@
       el.appendChild(n);
     }
     const refs = (catalog.refs || []).filter((r) => r.page === p.src);
-    if (refs.length) el.insertAdjacentHTML('beforeend', refs.map((r) => refHTML(r, posOfSrc)).join(''));
+    if (refs.length) el.insertAdjacentHTML('beforeend', refs.map((r) => refHTML(r, posOfSrc, mirrored)).join(''));
     fillSlots(el);
     return el;
   }
 
   /** A "see page N" note, redrawn with the page's new number (or dropped when that page is out). */
-  function refHTML(r, posOfSrc) {
+  function refHTML(r, posOfSrc, mirrored) {
     const n = posOfSrc[r.target];
     const text = n ? r.tpl.replace('{n}', n) : (r.alt || '');
     if (!text) return '';
     // placed by text baseline: with Inter's 1.21 line box the baseline sits .96875em below the top
-    return `<span class="xref" style="left:calc(${r.x} * var(--pt));top:calc(${(r.base - 0.96875 * r.size).toFixed(2)} * var(--pt));` +
+    const x = mirrored && r.xm != null ? r.xm : r.x;
+    return `<span class="xref" style="left:calc(${x} * var(--pt));top:calc(${(r.base - 0.96875 * r.size).toFixed(2)} * var(--pt));` +
       `font-size:calc(${r.size} * var(--pt));color:${r.color}">${esc(text)}</span>`;
   }
 
