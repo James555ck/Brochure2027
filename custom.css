@@ -50,6 +50,7 @@
 .swatch.on{border-color:var(--fg);box-shadow:0 0 0 1px var(--fg)}
 .dot{display:inline-block;width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.25)}
 .dot.grey{background:#8f959c}.dot.black{background:#111}.dot.white{background:#fff}
+.dot.none{background:transparent;border-style:dashed}
 .btn.primary{background:var(--fg);color:#fff;border-color:var(--fg)}
 .btn.primary:hover{background:#3a3833}
 @media (max-width:640px){.qgrid{grid-template-columns:1fr}}
@@ -60,8 +61,10 @@
 .clogo{position:absolute;top:calc(28 * var(--pt));right:calc(28 * var(--pt))}
 .lg{display:block;line-height:0}
 .lg img{display:block}
-.clogo .lg.box{background:#fff;padding:calc(10 * var(--pt))}
-.blogo .lg.box{background:#fff;padding:calc(8 * var(--pt))}
+.clogo .lg.box{padding:calc(10 * var(--pt))}
+.blogo .lg.box{padding:calc(8 * var(--pt))}
+.lg.box.white{background:#fff}
+.lg.box.black{background:#111}
 
 /* ---- back page: the card's contents are drawn here (card is 135,165 - 461,595 pt) ------- */
 .backc{position:absolute;inset:0;color:#111;font-weight:300}

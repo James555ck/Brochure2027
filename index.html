@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=8">
-<link rel="stylesheet" href="custom.css?v=4">
+<link rel="stylesheet" href="custom.css?v=5">
 </head>
 <body>
 <header class="topbar">
@@ -40,7 +40,7 @@
         <button class="btn" type="button" id="logoBtn">Choose your logo</button>
         <button class="btn" type="button" id="logoClear" hidden>Remove logo</button>
         <input type="file" id="logoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp,image/gif" hidden>
-        <label class="qchk"><input type="checkbox" id="logoBox" checked> White box behind the logo</label>
+        <span class="qlabel">Logo background</span><div class="swatches" id="boxes"></div>
         <span class="qhint" id="logoHint">PNG, JPG or SVG.</span>
       </div>
       <div class="qlogo" id="variantRow">
@@ -101,6 +101,6 @@
 </main>
 
 <script src="lib/page-flip.browser.js"></script>
-<script src="app.js?v=13"></script>
+<script src="app.js?v=14"></script>
 </body>
 </html>

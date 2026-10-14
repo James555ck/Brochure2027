@@ -25,7 +25,7 @@
   let layout = [];          // body plus transparent end blanks (landscape) - what the engine shows
   let dims = { pw: 0, ph: 0, portrait: false };
   let pageW = 595, pageH = 842;
-  const custom = { variant: null, name: '', web: '', phone: '', email: '', address: '', logo: null, logoRatio: 3, logoBox: true };
+  const custom = { variant: null, name: '', web: '', phone: '', email: '', address: '', logo: null, logoRatio: 3, logoBox: 'white' };
 
   // ---- page list --------------------------------------------------------------
   function isVisible(p) {
@@ -147,7 +147,7 @@
     if (!custom.logo) return '';
     const max = where === 'cover' ? { w: 280, h: 120 } : { w: 270, h: 100 };
     const w = Math.min(max.w, max.h * custom.logoRatio), h = w / custom.logoRatio;
-    return `<div class="lg${custom.logoBox ? ' box' : ''}"><img src="${custom.logo}" alt="" ` +
+    return `<div class="lg${custom.logoBox !== 'none' ? ' box ' + custom.logoBox : ''}"><img src="${custom.logo}" alt="" ` +
       `style="width:calc(${w.toFixed(1)} * var(--pt));height:calc(${h.toFixed(1)} * var(--pt))"></div>`;
   }
 
@@ -200,15 +200,14 @@
   function initCustom() {
     const d = catalog.defaults;
     const reset = () => Object.assign(custom, { name: d.name, web: d.web, phone: d.phone, email: d.email,
-      address: d.address.join('\n'), logo: null, logoBox: true, variant: catalog.defaultVariant || null });
+      address: d.address.join('\n'), logo: null, logoBox: 'white', variant: catalog.defaultVariant || null });
     reset();
     const f = { name: $('fName'), web: $('fWeb'), phone: $('fPhone'), email: $('fEmail'), address: $('fAddr') };
-    const sync = () => { for (const k in f) f[k].value = custom[k]; $('logoBox').checked = custom.logoBox; renderLogoUi(); renderSwatches(); };
+    const sync = () => { for (const k in f) f[k].value = custom[k]; renderLogoUi(); renderBoxes(); renderSwatches(); };
     for (const k in f) {
       f[k].placeholder = k === 'address' ? d.address.join('\n') : d[k];
       f[k].addEventListener('input', () => { custom[k] = f[k].value; refreshCustom(); });
     }
-    $('logoBox').addEventListener('change', () => { custom.logoBox = $('logoBox').checked; refreshCustom(); });
     $('logoBtn').onclick = () => $('logoFile').click();
     $('logoClear').onclick = () => { custom.logo = null; renderLogoUi(); refreshCustom(); };
     $('logoFile').addEventListener('change', (e) => {
@@ -241,6 +240,17 @@
     $('logoBtn').textContent = custom.logo ? 'Change logo' : 'Choose your logo';
     if (!custom.logo) $('logoHint').textContent = 'PNG, JPG or SVG.';
     else if (name) $('logoHint').textContent = name;
+  }
+
+  /** Background behind the customer's logo: none, white or black. */
+  function renderBoxes() {
+    const opts = [['none', 'No box'], ['white', 'White box'], ['black', 'Black box']];
+    $('boxes').innerHTML = opts.map(([id, label]) =>
+      `<button type="button" class="swatch${id === custom.logoBox ? ' on' : ''}" data-b="${id}" aria-pressed="${id === custom.logoBox}">` +
+      `<i class="dot ${id === 'none' ? 'none' : id}"></i>${label}</button>`).join('');
+    $('boxes').querySelectorAll('.swatch').forEach((b) => {
+      b.onclick = () => { custom.logoBox = b.dataset.b; renderBoxes(); refreshCustom(); };
+    });
   }
 
   function renderSwatches() {
