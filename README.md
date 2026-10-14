@@ -11,7 +11,8 @@ the cover style is Black (the default), Grey or White. The logo areas are large:
 **2 Choose your pages** - only pages are optional (all the clothing is always in, because removing it breaks the layout):
 Our story, Why choose us, Our ranges, Any cord. Any hood and Cord options. Our story and Why choose us start switched off.
 Everything that depends on page order is redrawn straight away: the index, the printed page numbers, and the "Kids version
-available on page N", "Adults version on page N" and "for more info see page N" notes (a note disappears when the page it points to is out).
+available on page N", "Adults version on page N" and "for more info see page N" notes (a note disappears when the page it points to is out). Blank pages keep the layout right: the index always sits on a right-hand page (a blank goes in straight after the cover if
+removing pages would push it left) and the back page always sits alone on the left (a blank goes in just before it if needed).
 
 **3 Download** - not built yet.
 

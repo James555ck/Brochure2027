@@ -39,17 +39,24 @@
     }
   }
 
-  /** Visible pages in order, with blank fillers so that two-page products start on a
-   *  left-hand (even) position and the back cover lands on an even position. */
+  /** Visible pages in order, with blank fillers so that two-page products start on a left-hand (even) position and
+   *  the back cover lands on an even position. The index must sit on a right-hand page, as in the design: if removing
+   *  pages would put it on the left, a blank page goes in straight after the cover and everything moves along one. */
   function arrange() {
-    const out = [];
-    for (const p of catalog.pages) {
-      if (!isVisible(p)) continue;
-      const nextPos = out.length + 1;
-      if ((p.spreadStart || p.kind === 'back') && nextPos % 2 === 1) out.push({ blank: true });
-      out.push(p);
-    }
-    return out;
+    const lay = (frontBlank) => {
+      const out = [];
+      for (const p of catalog.pages) {
+        if (!isVisible(p)) continue;
+        const nextPos = out.length + 1;
+        if ((p.spreadStart || p.kind === 'back') && nextPos % 2 === 1) out.push({ blank: true });
+        out.push(p);
+        if (frontBlank && p.kind === 'cover') out.push({ blank: true });
+      }
+      return out;
+    };
+    const plain = lay(false);
+    const at = plain.findIndex((p) => p.kind === 'index') + 1;
+    return at > 0 && at % 2 === 0 ? lay(true) : plain;
   }
 
   // ---- page elements ----------------------------------------------------------
