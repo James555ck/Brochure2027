@@ -4,7 +4,7 @@
   595.28,
   841.89
  ],
- "build": "1791978501",
+ "build": "1791979506",
  "live": true,
  "variants": [
   {
@@ -41,27 +41,32 @@
   {
    "id": "story",
    "label": "Our story",
-   "page": 2
+   "page": 2,
+   "on": false
   },
   {
    "id": "why",
    "label": "Why choose us",
-   "page": 3
+   "page": 3,
+   "on": false
   },
   {
    "id": "ranges",
    "label": "Our ranges",
-   "page": 4
+   "page": 4,
+   "on": true
   },
   {
    "id": "cord",
    "label": "Any cord. Any hood",
-   "page": 42
+   "page": 42,
+   "on": true
   },
   {
    "id": "cords",
    "label": "Cord options",
-   "page": 43
+   "page": 43,
+   "on": true
   }
  ],
  "tiers": [

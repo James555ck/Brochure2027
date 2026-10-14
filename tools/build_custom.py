@@ -28,6 +28,7 @@ PRINTED = {1: "cover", 2: "story", 3: "offer", 4: "ranges", 5: "index", 42: "cor
 OPTIONS = [("story", "Our story", 2), ("why", "Why choose us", 3), ("ranges", "Our ranges", 4),
            ("cord", "Any cord. Any hood", 42), ("cords", "Cord options", 43)]
 OPT_BY_PAGE = {p: i for i, _l, p in OPTIONS}
+OFF_BY_DEFAULT = {"story", "why"}      # start out of the brochure; the customer can switch them on
 THUMB_W = 397
 
 
@@ -100,7 +101,7 @@ def main(folder, brochure_id="2027", skip_render=False):
         "variants": [{"id": v, "label": lb, "dark": dk} for v, lb, dk in VARIANTS],
         "defaultVariant": VARIANTS[0][0],
         "defaults": render["defaults"],
-        "options": [{"id": i, "label": lb, "page": p} for i, lb, p in OPTIONS],
+        "options": [{"id": i, "label": lb, "page": p, "on": i not in OFF_BY_DEFAULT} for i, lb, p in OPTIONS],
         "tiers": [{"id": i, "name": nm, "tagline": tg} for i, nm, tg in bp.TIERS],
         "products": [{"id": i, "name": nm, "code": c, "tier": t, "category": cat, "kids": k, "pages": pg}
                      for i, nm, c, t, cat, k, pg in bp.PRODUCTS],

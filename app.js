@@ -1,7 +1,7 @@
 /* Cottonridge 2027 brochure.
  *
  * Two things drive the book:
- *   kept    - the product ids and page ids ('opt-story' ...) in the brochure.
+ *   kept    - what is in the brochure: every product id (always) plus the page ids ('opt-story' ...) the customer keeps.
  *   custom  - the customer's company details, logo and cover style.
  * buildBook() turns `kept` into an ordered page list (dropping pages nobody needs, keeping two-page
  * products on a left/right spread) and redraws everything that depends on page order: the index, the
@@ -477,7 +477,11 @@
     root.appendChild(sec);
   }
 
-  const allIds = () => [...catalog.products.map((x) => x.id), ...(catalog.options || []).map((o) => 'opt-' + o.id)];
+  const optionIds = () => (catalog.options || []).map((o) => 'opt-' + o.id);
+  const allIds = () => [...catalog.products.map((x) => x.id), ...optionIds()];
+  // all the clothing is always in (removing it breaks the layout); the optional pages start as the catalog says
+  const defaultKept = () => [...catalog.products.map((x) => x.id),
+    ...(catalog.options || []).filter((o) => o.on !== false).map((o) => 'opt-' + o.id)];
 
   function buildPicker() {
     const root = $('tiers');
@@ -486,12 +490,8 @@
       group(root, 'pages', 'Pages', 'Introduction and cord pages', catalog.options.map((o) => ({
         id: 'opt-' + o.id, name: o.label, tag: '', thumb: `${base}pages/thumb/p${pad2(o.page)}.jpg?v=${catalog.build}` })));
     }
-    for (const tier of catalog.tiers) {
-      group(root, tier.id, tier.name, tier.tagline, catalog.products.filter((x) => x.tier === tier.id).map((x) => ({
-        id: x.id, name: x.name, tag: x.category, thumb: thumb(x) })));
-    }
-    $('all').onclick = () => toggle(allIds(), true);
-    $('none').onclick = () => toggle(allIds(), false);
+    $('all').onclick = () => toggle(optionIds(), true);
+    $('none').onclick = () => toggle(optionIds(), false);
   }
 
   function toggle(ids, on) {
@@ -511,8 +511,7 @@
       const tiles = [...sec.querySelectorAll('.inc')];
       sec.querySelector('.tc').textContent = `${tiles.filter((b) => kept.has(b.dataset.id)).length} of ${tiles.length}`;
     });
-    const total = catalog.products.length, n = catalog.products.filter((x) => kept.has(x.id)).length;
-    const text = `${n} of ${total} products · ${arrange().length} pages`;
+    const text = `${arrange().length} pages`;
     $('count').textContent = text;
     $('sub2').textContent = text;
   }
@@ -552,7 +551,7 @@
     document.title = catalog.title + ' Brochure';
 
     const fromUrl = new URLSearchParams(location.search).get('kept');
-    kept = new Set(fromUrl ? fromUrl.split(',') : allIds());
+    kept = new Set(fromUrl ? fromUrl.split(',') : defaultKept());
     initCustom();
     buildPicker();
     applyZoom();
