@@ -1,12 +1,17 @@
 {
  "title": "Cottonridge 2027",
  "pageSize": [
-  594.96,
-  841.92
+  595.28,
+  841.89
  ],
- "build": "1791977277",
+ "build": "1791978009",
  "live": true,
  "variants": [
+  {
+   "id": "black",
+   "label": "Black",
+   "dark": true
+  },
   {
    "id": "grey",
    "label": "Grey",
@@ -16,14 +21,9 @@
    "id": "white",
    "label": "White",
    "dark": false
-  },
-  {
-   "id": "black",
-   "label": "Black",
-   "dark": true
   }
  ],
- "defaultVariant": "grey",
+ "defaultVariant": "black",
  "defaults": {
   "name": "TGI Corporation LTD",
   "address": [
@@ -448,34 +448,39 @@
    "src": 2,
    "kind": "story",
    "opt": "story",
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p03",
    "src": 3,
    "kind": "offer",
    "opt": "why",
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p04",
    "src": 4,
    "kind": "ranges",
    "opt": "ranges",
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p05",
    "src": 5,
    "kind": "index",
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p06",
    "src": 6,
    "kind": "divider",
    "tier": "base",
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p07",
@@ -484,7 +489,8 @@
    "requires": [
     "meteor"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p08",
@@ -493,7 +499,8 @@
    "requires": [
     "apollo"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p09",
@@ -502,7 +509,8 @@
    "requires": [
     "solar"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p10",
@@ -511,7 +519,8 @@
    "requires": [
     "nebula"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p11",
@@ -520,7 +529,8 @@
    "requires": [
     "astra"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p12",
@@ -530,7 +540,8 @@
     "atlas"
    ],
    "spreadStart": true,
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p13",
@@ -539,7 +550,8 @@
    "requires": [
     "atlas"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p14",
@@ -548,7 +560,8 @@
    "requires": [
     "juno"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p15",
@@ -557,14 +570,16 @@
    "requires": [
     "vulcan"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p16",
    "src": 16,
    "kind": "divider",
    "tier": "better",
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p17",
@@ -573,7 +588,8 @@
    "requires": [
     "orion"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p18",
@@ -582,7 +598,8 @@
    "requires": [
     "eclipse"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p19",
@@ -591,7 +608,8 @@
    "requires": [
     "cassini"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p20",
@@ -600,7 +618,8 @@
    "requires": [
     "odyssey"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p21",
@@ -609,7 +628,8 @@
    "requires": [
     "horizon"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p22",
@@ -619,7 +639,8 @@
     "lunar"
    ],
    "spreadStart": true,
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p23",
@@ -628,14 +649,16 @@
    "requires": [
     "lunar"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p24",
    "src": 24,
    "kind": "divider",
    "tier": "best",
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p25",
@@ -644,7 +667,8 @@
    "requires": [
     "gemini"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p26",
@@ -653,7 +677,8 @@
    "requires": [
     "prostar"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p27",
@@ -662,7 +687,8 @@
    "requires": [
     "andromeda"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p28",
@@ -671,7 +697,8 @@
    "requires": [
     "titan"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p29",
@@ -680,7 +707,8 @@
    "requires": [
     "comet"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p30",
@@ -689,7 +717,8 @@
    "requires": [
     "saturn"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p31",
@@ -698,7 +727,8 @@
    "requires": [
     "jupiter"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p32",
@@ -707,7 +737,8 @@
    "requires": [
     "quasar"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p33",
@@ -716,7 +747,8 @@
    "requires": [
     "neptune"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p34",
@@ -725,21 +757,24 @@
    "requires": [
     "venus"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p35",
    "src": 35,
    "kind": "extra",
    "tier": "best",
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p36",
    "src": 36,
    "kind": "divider",
    "kids": true,
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p37",
@@ -749,7 +784,8 @@
     "apollo-k",
     "solar-k"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p38",
@@ -759,7 +795,8 @@
     "nebula-k",
     "astra-k"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p39",
@@ -768,7 +805,8 @@
    "requires": [
     "orion-k"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p40",
@@ -778,7 +816,8 @@
     "eclipse-k",
     "cassini-k"
    ],
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p41",
@@ -787,21 +826,24 @@
    "requires": [
     "andromeda-k"
    ],
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p42",
    "src": 42,
    "kind": "cord",
    "opt": "cord",
-   "num": "left"
+   "num": "left",
+   "numColor": "rgb(255, 255, 255)"
   },
   {
    "id": "p43",
    "src": 43,
    "kind": "cord",
    "opt": "cords",
-   "num": "right"
+   "num": "right",
+   "numColor": "rgb(153, 153, 153)"
   },
   {
    "id": "p44",
@@ -814,10 +856,9 @@
    "page": 8,
    "kind": "xref",
    "x": 28.3,
-   "y": 286.7,
-   "base": 294.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 294.09,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 37
   },
@@ -825,10 +866,9 @@
    "page": 9,
    "kind": "xref",
    "x": 382.7,
-   "y": 241.7,
-   "base": 249.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 248.47,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 37
   },
@@ -836,10 +876,9 @@
    "page": 10,
    "kind": "xref",
    "x": 28.3,
-   "y": 298.7,
-   "base": 306.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 305.5,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 38
   },
@@ -847,10 +886,9 @@
    "page": 11,
    "kind": "xref",
    "x": 382.7,
-   "y": 264.7,
-   "base": 272.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 271.28,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 38
   },
@@ -858,10 +896,9 @@
    "page": 17,
    "kind": "xref",
    "x": 382.7,
-   "y": 275.7,
-   "base": 283.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 282.69,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 39
   },
@@ -869,10 +906,9 @@
    "page": 18,
    "kind": "xref",
    "x": 28.3,
-   "y": 275.7,
-   "base": 283.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 282.69,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 40
   },
@@ -880,10 +916,9 @@
    "page": 19,
    "kind": "xref",
    "x": 382.7,
-   "y": 286.7,
-   "base": 294.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 294.09,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 40
   },
@@ -891,10 +926,9 @@
    "page": 27,
    "kind": "xref",
    "x": 382.7,
-   "y": 252.7,
-   "base": 260.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 259.88,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Kids version available on page {n}.",
    "target": 41
   },
@@ -902,10 +936,9 @@
    "page": 37,
    "kind": "xref",
    "x": 28.3,
-   "y": 226.7,
-   "base": 234.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 233.84,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 8
   },
@@ -913,10 +946,9 @@
    "page": 37,
    "kind": "xref",
    "x": 312.6,
-   "y": 203.7,
-   "base": 211.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 211.05,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 9
   },
@@ -924,10 +956,9 @@
    "page": 38,
    "kind": "xref",
    "x": 28.3,
-   "y": 238.7,
-   "base": 246.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 245.25,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 10
   },
@@ -935,10 +966,9 @@
    "page": 38,
    "kind": "xref",
    "x": 312.6,
-   "y": 215.7,
-   "base": 223.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 222.44,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 11
   },
@@ -946,10 +976,9 @@
    "page": 39,
    "kind": "xref",
    "x": 382.7,
-   "y": 264.7,
-   "base": 272.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 271.28,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 17
   },
@@ -957,10 +986,9 @@
    "page": 40,
    "kind": "xref",
    "x": 28.3,
-   "y": 226.7,
-   "base": 234.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 233.84,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 18
   },
@@ -968,10 +996,9 @@
    "page": 40,
    "kind": "xref",
    "x": 312.6,
-   "y": 238.7,
-   "base": 246.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 245.25,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 19
   },
@@ -979,21 +1006,19 @@
    "page": 41,
    "kind": "xref",
    "x": 382.7,
-   "y": 252.7,
-   "base": 260.0,
-   "size": 8.0,
-   "color": "#444444",
+   "base": 259.88,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
    "tpl": "Adults version on page {n}.",
    "target": 27
   },
   {
    "page": 42,
    "kind": "tail",
-   "x": 394.9,
-   "y": 525.5,
-   "base": 535.0,
+   "x": 395,
+   "base": 535.17,
    "size": 10.5,
-   "color": "#111111",
+   "color": "rgb(17, 17, 17)",
    "tpl": ", for more info see page {n}.",
    "alt": ".",
    "target": 43
@@ -1026,5 +1051,5 @@
    "opt": "cords"
   }
  ],
- "indexQuote": ""
+ "indexQuote": "\u201cWe\u2019re so happy you\u2019re launching a Workwear Hoodie, Polo and T-Shirt so we can finally offer our customers a Cottonridge workwear bundle.\u201d"
 }

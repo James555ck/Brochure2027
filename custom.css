@@ -3,6 +3,34 @@
 
 .page{--pt:.168067cqw}
 
+/* ---- printed page numbers (design: 10pt, box 12pt tall at y=819, 14.6pt from the left / 14.7pt from the right edge) ---- */
+.pnum{position:absolute;bottom:calc(10.9 * var(--pt));font-size:calc(10 * var(--pt));line-height:calc(12 * var(--pt));
+  color:#999;font-variant-numeric:tabular-nums}
+.pnum.left{left:calc(14.6 * var(--pt))}
+.pnum.right{right:calc(14.7 * var(--pt))}
+
+/* ---- index page, drawn over the design's photo + white card. Every size below is measured from the design file. ---- */
+.page.index{color:#111}
+.index .idx{position:absolute;inset:0;font-size:calc(7.5 * var(--pt));line-height:calc(10 * var(--pt))}
+.index h2{position:absolute;left:calc(64 * var(--pt));top:calc(66 * var(--pt));margin:0;font-size:calc(64 * var(--pt));
+  line-height:calc(64 * var(--pt));font-weight:700;letter-spacing:calc(-3.5 * var(--pt))}
+.index .flow{position:absolute;left:calc(64 * var(--pt));right:calc(64 * var(--pt));top:calc(148 * var(--pt))}
+.index .sec{position:relative;border-top:calc(1 * var(--pt)) solid #111;padding:calc(9 * var(--pt)) 0 calc(14 * var(--pt))}
+.index .front{padding-top:calc(8 * var(--pt));font-size:calc(8 * var(--pt))}
+.index .row,.index .item{display:flex;justify-content:space-between}
+.index .row{padding-left:calc(208 * var(--pt));line-height:calc(12 * var(--pt));margin-bottom:calc(2 * var(--pt))}
+.index .row:last-child{margin-bottom:0}
+.index .tname{position:absolute;left:0;top:calc(9 * var(--pt));font-size:calc(10 * var(--pt));line-height:calc(12 * var(--pt));font-weight:700}
+.index .cat{display:grid;grid-template-columns:calc(118 * var(--pt)) 1fr;margin-left:calc(90 * var(--pt));margin-bottom:calc(7 * var(--pt))}
+.index .cat:last-child{margin-bottom:0}
+.index .cname{font-size:calc(7 * var(--pt));font-weight:700}
+.index .item{margin-bottom:calc(1 * var(--pt))}
+.index .item:last-child{margin-bottom:0}
+.index .code{color:#999}
+.index .quote{position:absolute;left:calc(64 * var(--pt));right:calc(64 * var(--pt));top:calc(751 * var(--pt));
+  border-top:calc(1 * var(--pt)) solid #111;padding-top:calc(9 * var(--pt));font-size:calc(7 * var(--pt));
+  line-height:calc(10.5 * var(--pt));font-weight:500}
+
 /* ---- Customise form ---------------------------------------------------------- */
 .qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s) var(--u)}
 .qgrid label{display:flex;flex-direction:column;gap:calc(var(--s) / 2);color:var(--soft);font-weight:500}

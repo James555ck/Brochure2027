@@ -79,6 +79,7 @@
       const n = document.createElement('span');
       n.className = 'pnum ' + (pos % 2 === 0 ? 'left' : 'right');
       n.textContent = pos;
+      if (p.numColor) n.style.color = p.numColor;
       el.appendChild(n);
     }
     const refs = (catalog.refs || []).filter((r) => r.page === p.src);

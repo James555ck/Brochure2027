@@ -1,0 +1,359 @@
+{
+ "nums": {
+  "2": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "3": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "4": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "5": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "6": {
+   "side": "left",
+   "color": "rgb(255, 255, 255)"
+  },
+  "7": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "8": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "9": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "10": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "11": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "12": {
+   "side": "left",
+   "color": "rgb(255, 255, 255)"
+  },
+  "13": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "14": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "15": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "16": {
+   "side": "left",
+   "color": "rgb(255, 255, 255)"
+  },
+  "17": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "18": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "19": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "20": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "21": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "22": {
+   "side": "left",
+   "color": "rgb(255, 255, 255)"
+  },
+  "23": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "24": {
+   "side": "left",
+   "color": "rgb(255, 255, 255)"
+  },
+  "25": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "26": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "27": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "28": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "29": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "30": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "31": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "32": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "33": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "34": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "35": {
+   "side": "right",
+   "color": "rgb(255, 255, 255)"
+  },
+  "36": {
+   "side": "left",
+   "color": "rgb(255, 255, 255)"
+  },
+  "37": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "38": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "39": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "40": {
+   "side": "left",
+   "color": "rgb(153, 153, 153)"
+  },
+  "41": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  },
+  "42": {
+   "side": "left",
+   "color": "rgb(255, 255, 255)"
+  },
+  "43": {
+   "side": "right",
+   "color": "rgb(153, 153, 153)"
+  }
+ },
+ "refs": [
+  {
+   "page": 8,
+   "kind": "xref",
+   "x": 28.3,
+   "base": 294.09,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 37
+  },
+  {
+   "page": 9,
+   "kind": "xref",
+   "x": 382.7,
+   "base": 248.47,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 37
+  },
+  {
+   "page": 10,
+   "kind": "xref",
+   "x": 28.3,
+   "base": 305.5,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 38
+  },
+  {
+   "page": 11,
+   "kind": "xref",
+   "x": 382.7,
+   "base": 271.28,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 38
+  },
+  {
+   "page": 17,
+   "kind": "xref",
+   "x": 382.7,
+   "base": 282.69,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 39
+  },
+  {
+   "page": 18,
+   "kind": "xref",
+   "x": 28.3,
+   "base": 282.69,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 40
+  },
+  {
+   "page": 19,
+   "kind": "xref",
+   "x": 382.7,
+   "base": 294.09,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 40
+  },
+  {
+   "page": 27,
+   "kind": "xref",
+   "x": 382.7,
+   "base": 259.88,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Kids version available on page {n}.",
+   "target": 41
+  },
+  {
+   "page": 37,
+   "kind": "xref",
+   "x": 28.3,
+   "base": 233.84,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 8
+  },
+  {
+   "page": 37,
+   "kind": "xref",
+   "x": 312.6,
+   "base": 211.05,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 9
+  },
+  {
+   "page": 38,
+   "kind": "xref",
+   "x": 28.3,
+   "base": 245.25,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 10
+  },
+  {
+   "page": 38,
+   "kind": "xref",
+   "x": 312.6,
+   "base": 222.44,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 11
+  },
+  {
+   "page": 39,
+   "kind": "xref",
+   "x": 382.7,
+   "base": 271.28,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 17
+  },
+  {
+   "page": 40,
+   "kind": "xref",
+   "x": 28.3,
+   "base": 233.84,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 18
+  },
+  {
+   "page": 40,
+   "kind": "xref",
+   "x": 312.6,
+   "base": 245.25,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 19
+  },
+  {
+   "page": 41,
+   "kind": "xref",
+   "x": 382.7,
+   "base": 259.88,
+   "size": 8,
+   "color": "rgb(68, 68, 68)",
+   "tpl": "Adults version on page {n}.",
+   "target": 27
+  },
+  {
+   "page": 42,
+   "kind": "tail",
+   "x": 395,
+   "base": 535.17,
+   "size": 10.5,
+   "color": "rgb(17, 17, 17)",
+   "tpl": ", for more info see page {n}.",
+   "alt": ".",
+   "target": 43
+  }
+ ],
+ "quote": "“We’re so happy you’re launching a Workwear Hoodie, Polo and T-Shirt so we can finally offer our customers a Cottonridge workwear bundle.”",
+ "defaults": {
+  "name": "TGI Corporation LTD",
+  "address": [
+   "Cottonridge House",
+   "24C Conduit RD",
+   "Norton Canes",
+   "Cannock",
+   "Staffordshire, WS11 9TJ"
+  ],
+  "email": "salesteam@cottonridge.co.uk",
+  "phone": "01543 278 558",
+  "web": "cottonridge.co.uk"
+ }
+}
