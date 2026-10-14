@@ -8,11 +8,15 @@ a logo goes top right on the cover and in the empty top of the back page's card 
 the cover style is Black (the default), Grey or White. The logo areas are large: up to 280 x 120 pt on the cover and
 270 x 100 pt on the back card (the page is 595 pt wide).
 
-**2 Choose your pages** - only pages are optional (all the clothing is always in, because removing it breaks the layout):
-Our story, Why choose us, Our ranges, Any cord. Any hood and Cord options. Our story and Why choose us start switched off.
+**2 Choose what goes in your brochure** - tick products and pages in or out. Pages: Our story and Why choose us (both start
+switched off), Our ranges, Any cord. Any hood, Cord options. Products: every garment in Base, Better, Best and Kids.
 Everything that depends on page order is redrawn straight away: the index, the printed page numbers, and the "Kids version
-available on page N", "Adults version on page N" and "for more info see page N" notes (a note disappears when the page it points to is out). Blank pages keep the layout right: the index always sits on a right-hand page (a blank goes in straight after the cover if
-removing pages would push it left) and the back page always sits alone on the left (a blank goes in just before it if needed).
+available on page N", "Adults version on page N" and "for more info see page N" notes (a note disappears when the page it points to is out).
+
+Blank pages keep every page on the side it has in the design: each range's divider (Base, Better, Best, Kids), the two-page
+products (Atlas, Lunar), the cord page and the back page all open on a left-hand page, so if removing products leaves an odd
+page before one of them, a blank page is added at the back of that range. The index always sits on a right-hand page (a blank
+goes in straight after the cover if removing pages would push it left).
 
 **3 Download** - not built yet.
 

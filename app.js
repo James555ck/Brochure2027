@@ -1,7 +1,7 @@
 /* Cottonridge 2027 brochure.
  *
  * Two things drive the book:
- *   kept    - what is in the brochure: every product id (always) plus the page ids ('opt-story' ...) the customer keeps.
+ *   kept    - what is in the brochure: product ids and page ids ('opt-story' ...).
  *   custom  - the customer's company details, logo and cover style.
  * buildBook() turns `kept` into an ordered page list (dropping pages nobody needs, keeping two-page
  * products on a left/right spread) and redraws everything that depends on page order: the index, the
@@ -39,16 +39,20 @@
     }
   }
 
-  /** Visible pages in order, with blank fillers so that two-page products start on a left-hand (even) position and
-   *  the back cover lands on an even position. The index must sit on a right-hand page, as in the design: if removing
-   *  pages would put it on the left, a blank page goes in straight after the cover and everything moves along one. */
+  /** Pages that must open on a left-hand (even) position, as they do in the design: two-page products (so the photo is
+   *  on the left and the details on the right), each range's divider (Base, Better, Best, Kids), the cord pages and the back page. */
+  const startsLeft = (p) => p.spreadStart || p.kind === 'divider' || p.kind === 'back' || p.opt === 'cord';
+
+  /** Visible pages in order. Whenever a page that must start on the left would land on the right, a blank page goes in
+   *  before it: so when removing products leaves a range with an odd number of pages, the blank ends up at the back of
+   *  that range and everything after it stays on the side it has in the design. The index must sit on a right-hand
+   *  page: if removing pages would put it on the left, a blank goes in straight after the cover instead. */
   function arrange() {
     const lay = (frontBlank) => {
       const out = [];
       for (const p of catalog.pages) {
         if (!isVisible(p)) continue;
-        const nextPos = out.length + 1;
-        if ((p.spreadStart || p.kind === 'back') && nextPos % 2 === 1) out.push({ blank: true });
+        if (startsLeft(p) && (out.length + 1) % 2 === 1) out.push({ blank: true });
         out.push(p);
         if (frontBlank && p.kind === 'cover') out.push({ blank: true });
       }
@@ -486,7 +490,7 @@
 
   const optionIds = () => (catalog.options || []).map((o) => 'opt-' + o.id);
   const allIds = () => [...catalog.products.map((x) => x.id), ...optionIds()];
-  // all the clothing is always in (removing it breaks the layout); the optional pages start as the catalog says
+  // everything starts in, except the optional pages the catalog says start out (Our story, Why choose us)
   const defaultKept = () => [...catalog.products.map((x) => x.id),
     ...(catalog.options || []).filter((o) => o.on !== false).map((o) => 'opt-' + o.id)];
 
@@ -497,8 +501,12 @@
       group(root, 'pages', 'Pages', 'Introduction and cord pages', catalog.options.map((o) => ({
         id: 'opt-' + o.id, name: o.label, tag: '', thumb: `${base}pages/thumb/p${pad2(o.page)}.jpg?v=${catalog.build}` })));
     }
-    $('all').onclick = () => toggle(optionIds(), true);
-    $('none').onclick = () => toggle(optionIds(), false);
+    for (const tier of catalog.tiers) {
+      group(root, tier.id, tier.name, tier.tagline, catalog.products.filter((x) => x.tier === tier.id).map((x) => ({
+        id: x.id, name: x.name, tag: x.category, thumb: thumb(x) })));
+    }
+    $('all').onclick = () => toggle(allIds(), true);
+    $('none').onclick = () => toggle(allIds(), false);
   }
 
   function toggle(ids, on) {
@@ -518,7 +526,8 @@
       const tiles = [...sec.querySelectorAll('.inc')];
       sec.querySelector('.tc').textContent = `${tiles.filter((b) => kept.has(b.dataset.id)).length} of ${tiles.length}`;
     });
-    const text = `${arrange().length} pages`;
+    const total = catalog.products.length, n = catalog.products.filter((x) => kept.has(x.id)).length;
+    const text = `${n} of ${total} products · ${arrange().length} pages`;
     $('count').textContent = text;
     $('sub2').textContent = text;
   }
