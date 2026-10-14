@@ -4,7 +4,7 @@
   594.96,
   841.92
  ],
- "build": "1791973516",
+ "build": "1791977277",
  "live": true,
  "variants": [
   {
@@ -13,19 +13,18 @@
    "dark": false
   },
   {
-   "id": "black",
-   "label": "Black",
-   "dark": true
-  },
-  {
    "id": "white",
    "label": "White",
    "dark": false
+  },
+  {
+   "id": "black",
+   "label": "Black",
+   "dark": true
   }
  ],
  "defaultVariant": "grey",
  "defaults": {
-  "trade": "Cottonridge is a trading brand of TGI Corporation Ltd",
   "name": "TGI Corporation LTD",
   "address": [
    "Cottonridge House",
@@ -1027,5 +1026,5 @@
    "opt": "cords"
   }
  ],
- "indexQuote": "\u201cWe\u2019re so happy you\u2019re launching a Workwear Hoodie, Polo and T-Shirt so we can finally offer our customers a Cottonridge workwear bundle.\u201d"
+ "indexQuote": ""
 }

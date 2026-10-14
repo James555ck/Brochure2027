@@ -29,41 +29,26 @@
 @media (max-width:640px){.sn .full{display:none}.sn .short{display:inline}}
 
 /* ---- cover logo (top right) ---------------------------------------------------- */
-.clogo{position:absolute;top:calc(24 * var(--pt));right:calc(24 * var(--pt))}
+.clogo{position:absolute;top:calc(28 * var(--pt));right:calc(28 * var(--pt))}
 .lg{display:block;line-height:0}
 .lg img{display:block}
-.clogo .lg.box{background:#fff;padding:calc(6 * var(--pt))}
-.blogo .lg.box{background:#fff;padding:calc(4 * var(--pt))}
+.clogo .lg.box{background:#fff;padding:calc(10 * var(--pt))}
+.blogo .lg.box{background:#fff;padding:calc(8 * var(--pt))}
 
-/* ---- back page: everything inside the card is drawn here ---------------------- */
-.backc{position:absolute;inset:0;--dy:0;color:#111;font-weight:300}
-.backc.has-logo{--dy:26}                                       /* room for the logo: content moves down this many pt */
+/* ---- back page: the card's contents are drawn here (card is 135,165 - 461,595 pt) ------- */
+.backc{position:absolute;inset:0;color:#111;font-weight:300}
 .backc .b,.backc .blogo{position:absolute;left:calc(135 * var(--pt));width:calc(326 * var(--pt));text-align:center}
-.backc .blogo{top:calc(174 * var(--pt));display:flex;justify-content:center}
-.backc .bqr{position:absolute;left:calc(254.6 * var(--pt));top:calc((193 + var(--dy)) * var(--pt));
-  width:calc(86 * var(--pt));height:calc(86 * var(--pt));padding:calc(6 * var(--pt));background:#fff;box-sizing:border-box}
-.backc .bqr svg{display:block;width:100%;height:100%;fill:#111}
-.backc .btrade{top:calc((301 + var(--dy)) * var(--pt));font-size:calc(8 * var(--pt));line-height:calc(11 * var(--pt));
-  letter-spacing:.0625em;color:#666}
-.backc .bname{top:calc((317 + var(--dy)) * var(--pt));font-size:calc(12 * var(--pt));line-height:calc(15 * var(--pt));font-weight:600;
+.backc .blogo{top:calc(181 * var(--pt));height:calc(124 * var(--pt));display:flex;align-items:center;justify-content:center}
+.backc .bname{top:calc(317 * var(--pt));font-size:calc(12 * var(--pt));line-height:calc(15 * var(--pt));font-weight:600;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.backc .baddr{top:calc((337 + var(--dy)) * var(--pt));font-size:calc(9.5 * var(--pt));line-height:calc(14 * var(--pt))}
-.backc .bcth{top:calc((425 + var(--dy)) * var(--pt));font-size:calc(12 * var(--pt));line-height:calc(15 * var(--pt));font-weight:600}
-.backc .bct{top:calc((443 + var(--dy)) * var(--pt));font-size:calc(9.5 * var(--pt));line-height:calc(14 * var(--pt))}
-.backc .bsoc{top:calc((485 + var(--dy)) * var(--pt));display:flex;justify-content:center;gap:calc(5 * var(--pt))}
-.backc .bsoc i{display:flex;align-items:center;justify-content:center;width:calc(14 * var(--pt));height:calc(14 * var(--pt));
-  border-radius:50%;background:#111;color:#fff;font-style:normal;font-weight:700;font-size:calc(10 * var(--pt));line-height:1}
-.backc .bview{top:calc((517 + var(--dy)) * var(--pt));font-size:calc(8.5 * var(--pt));line-height:calc(11 * var(--pt));
-  letter-spacing:.07em;color:#444}
-.backc .bweb{top:calc((530 + var(--dy)) * var(--pt));font-size:calc(18 * var(--pt));line-height:calc(22 * var(--pt));font-weight:600;white-space:nowrap}
-.backc .bcopy{top:calc((563 + var(--dy)) * var(--pt));font-size:calc(7 * var(--pt));line-height:calc(10 * var(--pt));
-  letter-spacing:.057em;color:#666}
-/* black cover style: white text on the black page */
+.backc .baddr{top:calc(337 * var(--pt));font-size:calc(9.5 * var(--pt));line-height:calc(14 * var(--pt))}
+.backc .bcth{top:calc(425 * var(--pt));font-size:calc(12 * var(--pt));line-height:calc(15 * var(--pt));font-weight:600}
+.backc .bct{top:calc(443 * var(--pt));font-size:calc(9.5 * var(--pt));line-height:calc(14 * var(--pt))}
+.backc .bview{top:calc(517 * var(--pt));font-size:calc(8.5 * var(--pt));line-height:calc(11 * var(--pt));letter-spacing:.07em;color:#444}
+.backc .bweb{top:calc(530 * var(--pt));font-size:calc(18 * var(--pt));line-height:calc(22 * var(--pt));font-weight:600;white-space:nowrap}
+/* all-black style: white text on the black page */
 .backc.dark{color:#fff}
-.backc.dark .btrade,.backc.dark .bcopy{color:#8a8a8a}
-.backc.dark .bview{color:#bbb}
-.backc.dark .bsoc i{background:#fff;color:#111}
-.backc.dark .bsoc svg{stroke:#111}
+.backc.dark .bview{color:#fff}
 
 /* ---- "see page N" notes redrawn after pages are added or removed ---------------- */
 .xref{position:absolute;white-space:nowrap;font-weight:400;line-height:1.21}

@@ -125,53 +125,33 @@
   }
 
   // ---- customer details: cover logo + back page --------------------------------
-  const isDefaultCompany = () => custom.name.trim() === catalog.defaults.name;
-
   function logoHTML(where) {
     if (!custom.logo) return '';
-    const max = where === 'cover' ? { w: 150, h: 60 } : { w: 180, h: 30 };
+    const max = where === 'cover' ? { w: 280, h: 120 } : { w: 270, h: 100 };
     const w = Math.min(max.w, max.h * custom.logoRatio), h = w / custom.logoRatio;
     return `<div class="lg${custom.logoBox ? ' box' : ''}"><img src="${custom.logo}" alt="" ` +
       `style="width:calc(${w.toFixed(1)} * var(--pt));height:calc(${h.toFixed(1)} * var(--pt))"></div>`;
   }
 
-  function qrSvg(text) {
-    try {
-      const qr = qrcode(0, 'M');
-      qr.addData(text);
-      qr.make();
-      const n = qr.getModuleCount();
-      let d = '';
-      for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
-      return `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" aria-hidden="true"><path d="${d}"/></svg>`;
-    } catch (e) { return ''; }
-  }
-
-  /** The back page's card contents. Positions match the printed original (see style.css .backc). */
+  /** The back page's card contents. Positions match the design (see custom.css .backc). */
   function backHTML() {
     const name = custom.name.trim();
     const email = custom.email.trim(), phone = custom.phone.trim();
     const addr = custom.address.split(/\r?\n/).map((l) => l.trim()).filter(Boolean).slice(0, 5);
     const web = custom.web.trim().replace(/^https?:\/\//i, '').replace(/\/+$/, '');
-    const url = web ? 'https://' + web : '';
-    const keepBrand = isDefaultCompany();
     let h = '';
     if (custom.logo) h += `<div class="blogo">${logoHTML('back')}</div>`;
-    if (url) h += `<div class="bqr">${qrSvg(url)}</div>`;
-    if (keepBrand) h += `<div class="b btrade">${esc(catalog.defaults.trade)}</div>`;
     if (name) h += `<div class="b bname">${esc(name)}</div>`;
     if (addr.length) h += `<div class="b baddr">${addr.map(esc).join('<br>')}</div>`;
     if (email || phone) {
       h += '<div class="b bcth">Contact us</div>';
       h += `<div class="b bct">${[email, phone].filter(Boolean).map(esc).join('<br>')}</div>`;
     }
-    if (keepBrand) h += '<div class="b bsoc"><i>f</i><i><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r=".6" fill="#fff"/></svg></i></div>';
     if (web) {
       const fs = Math.max(9, Math.min(18, 300 / (web.length * 0.57)));      // long web addresses shrink to fit the card
       h += '<div class="b bview">View our full range online</div>';
       h += `<div class="b bweb" style="font-size:calc(${fs.toFixed(1)} * var(--pt))">${esc(web)}</div>`;
     }
-    h += `<div class="b bcopy">© Copyright 2027.${name ? ' ' + esc(name) + '.' : ''}<br>All rights reserved.</div>`;
     return h;
   }
 
@@ -181,7 +161,7 @@
     const dark = !!(variantOf() && variantOf().dark);
     root.querySelectorAll('[data-slot="cover"]').forEach((s) => { s.innerHTML = logoHTML('cover'); });
     root.querySelectorAll('[data-slot="back"]').forEach((s) => {
-      s.className = 'backc' + (custom.logo ? ' has-logo' : '') + (dark ? ' dark' : '');
+      s.className = 'backc' + (dark ? ' dark' : '');
       s.innerHTML = backHTML();
     });
     const pages = root.matches && root.matches('.page.cover,.page.back') ? [root] : [...root.querySelectorAll('.page.cover,.page.back')];

@@ -1,18 +1,19 @@
-"""Build the customisable brochure from the three cover-variant PDFs.
+"""Build the customisable brochure's pages and catalog.
 
-Usage:  python tools/build_custom.py "<grey.pdf>" "<black.pdf>" "<white.pdf>" [brochure-id]
+Usage:  python tools/build_custom.py "<interior.pdf>" [brochure-id]        (default id: 2027)
+        node tools/render_covers.js "<design>.dc.html" brochures/<id>/pages   (the three cover/back styles)
 
-Writes brochures/<id>/pages/*.jpg and brochures/<id>/catalog.json (default id: 2027).
+Writes brochures/<id>/pages/*.jpg and brochures/<id>/catalog.json.
 
-The three PDFs share pages 2-43; only the cover (1) and back page (44) differ. So:
-- pages 2-43 are rendered once, from the grey PDF, with everything that depends on the
-  page order removed so the viewer can redraw it live:
+Pages 2-43 come from the PDF and are rendered with everything that depends on the page order removed, so the viewer can
+redraw it live:
     * the printed page numbers,
     * the index page text and rules (the photo and white card stay),
     * the "Kids version available on page N" / "Adults version on page N" / "see page N" references.
-- the cover and back page are rendered per variant (p01-<variant>.jpg, p44-<variant>.jpg); the back page has
-  its card cleared so the viewer can draw the customer's logo, details and QR code there.
-- catalog.json lists the products, which pages each one owns, the references and the defaults.
+The cover (p01-<style>.jpg) and back page (p44-<style>.jpg) are NOT made here: tools/render_covers.js renders them from the
+design file's "Cover pairs" (Current = grey, Option A = white, Option B = black), with the back page's card left empty for the
+customer's logo and details. Rebuilding the interior leaves those files alone.
+catalog.json lists the products, which pages each one owns, the references and the defaults.
 """
 import json
 import re
@@ -27,9 +28,8 @@ import build_pages as bp  # product list, tiers and page roles are shared with t
 
 ROOT = bp.ROOT
 DPI, JPG_QUALITY = bp.DPI, bp.JPG_QUALITY
-VARIANTS = [("grey", "Grey", False), ("black", "Black", True), ("white", "White", False)]
+VARIANTS = [("grey", "Grey", False), ("white", "White", False), ("black", "Black", True)]
 BACK = 44
-CARD_INNER = pymupdf.Rect(137, 167, 459, 619)       # inside the back page's white card (card is 135,165 - 461,621)
 PRINTED = {1: "cover", 2: "story", 3: "offer", 4: "ranges", 5: "index", 42: "cord", 43: "cord", 44: "back"}
 # pages a customer can leave out on their own (id, label, source page)
 OPTIONS = [("story", "Our story", 2), ("why", "Why choose us", 3), ("ranges", "Our ranges", 4),
@@ -91,13 +91,6 @@ def strip_and_collect(page, n):
     return num, refs
 
 
-def clear_back_card(page):
-    """Paint over everything inside the back page's card (text, QR, icons) in the card's own colour."""
-    px = page.get_pixmap(dpi=72, clip=pymupdf.Rect(139, 169, 141, 171), alpha=False)
-    r, g, b = px.pixel(0, 0)
-    page.draw_rect(CARD_INNER, color=None, fill=(r / 255, g / 255, b / 255))
-
-
 def back_defaults(page):
     """The text the back page prints today: these become the form's starting values."""
     ls = [(l["bbox"][1], line_text(l)) for l in lines_of(page)
@@ -108,19 +101,18 @@ def back_defaults(page):
     assert texts[:2] == want_start, texts[:3]
     i = texts.index("Contact us")
     web = next(t for t in texts if t.startswith("cottonridge."))
-    return {"trade": texts[0], "name": texts[1], "address": texts[2:i], "email": texts[i + 1], "phone": texts[i + 2], "web": web}
+    return {"name": texts[1], "address": texts[2:i], "email": texts[i + 1], "phone": texts[i + 2], "web": web}
 
 
-def main(grey, black, white, brochure_id="2027"):
+def main(interior, brochure_id="2027"):
     root = ROOT / "brochures" / brochure_id
     out = root / "pages"
     (out / "thumb").mkdir(parents=True, exist_ok=True)
-    for f in list(out.glob("*.jpg")) + list((out / "thumb").glob("*.jpg")):
+    for f in list(out.glob("p[0-9][0-9].jpg")) + list((out / "thumb").glob("*.jpg")):   # interior only: keep the p01-/p44- style files
         f.unlink()
 
-    docs = {"grey": pymupdf.open(grey), "black": pymupdf.open(black), "white": pymupdf.open(white)}
-    src = docs["grey"]
-    assert len(src) == 44 and all(len(d) == 44 for d in docs.values()), "expected three 44-page PDFs"
+    src = pymupdf.open(interior)
+    assert len(src) == 44, "expected a 44-page PDF"
 
     owners = {}
     for pid, *_r, pages in bp.PRODUCTS:
@@ -158,15 +150,12 @@ def main(grey, black, white, brochure_id="2027"):
         page.get_pixmap(dpi=48, alpha=False).save(out / "thumb" / f"p{n:02d}.jpg", jpg_quality=72)
         print("rendered", n)
 
-    for vid, _label, _dark in VARIANTS:
-        d = docs[vid]
-        d[0].get_pixmap(dpi=DPI, alpha=False).save(out / f"p01-{vid}.jpg", jpg_quality=JPG_QUALITY)
-        clear_back_card(d[BACK - 1])
-        d[BACK - 1].get_pixmap(dpi=DPI, alpha=False).save(out / f"p{BACK}-{vid}.jpg", jpg_quality=JPG_QUALITY)
-        print("variant", vid)
+    missing = [f for v, _l, _d in VARIANTS for f in (f"p01-{v}.jpg", f"p{BACK}-{v}.jpg") if not (out / f).exists()]
+    if missing:
+        print("NOTE: run tools/render_covers.js to create", ", ".join(missing))
 
-    defaults = back_defaults(pymupdf.open(grey)[BACK - 1])
-    quote = " ".join(line_text(l) for l in lines_of(pymupdf.open(grey)[4]) if l["bbox"][1] > 755 and not line_text(l).isdigit())
+    defaults = back_defaults(src[BACK - 1])
+    quote = " ".join(line_text(l) for l in lines_of(src[4]) if l["bbox"][1] > 755 and not line_text(l).isdigit())
     w, h = src[0].rect.width, src[0].rect.height
     catalog = {
         "title": "Cottonridge 2027",
@@ -191,6 +180,6 @@ def main(grey, black, white, brochure_id="2027"):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) not in (4, 5):
+    if len(sys.argv) not in (2, 3):
         sys.exit(__doc__)
     main(*sys.argv[1:])

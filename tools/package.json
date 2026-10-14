@@ -1,0 +1,6 @@
+{
+  "name": "brochure-tools",
+  "private": true,
+  "description": "Build tooling for the brochure pages (not shipped with the site)",
+  "dependencies": { "playwright-core": "*" }
+}
