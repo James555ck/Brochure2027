@@ -1,0 +1,69 @@
+/* Customisable brochure: the Customise form, the cover logo, the redrawn back page and the "see page" notes.
+   Sizes on the pages are in pt of the 595pt-wide A4 page: 1pt = .168067cqw (the page is a size container). */
+
+.page{--pt:.168067cqw}
+
+/* ---- Customise form ---------------------------------------------------------- */
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s) var(--u)}
+.qgrid label{display:flex;flex-direction:column;gap:calc(var(--s) / 2);color:var(--soft);font-weight:500}
+.qgrid .wide{grid-column:1 / -1}
+.qgrid input,.qgrid textarea{font:inherit;padding:calc(var(--s) * .9) var(--s);border:1px solid rgba(0,0,0,.22);
+  border-radius:8px;background:#fff;color:var(--fg);min-width:0;font-weight:400}
+.qgrid textarea{resize:vertical;line-height:1.4}
+.qgrid input:focus,.qgrid textarea:focus{outline:2px solid var(--fg);outline-offset:1px}
+.qlogo{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s) var(--u)}
+.qchk{display:flex;align-items:center;gap:var(--s);color:var(--soft);cursor:pointer}
+.qhint{color:var(--muted)}
+.qlabel{font-weight:600}
+.swatches{display:flex;gap:var(--s);flex-wrap:wrap}
+.swatch{display:flex;align-items:center;gap:8px;border:1px solid rgba(0,0,0,.18);background:#fff;border-radius:999px;
+  padding:5px 14px 5px 8px;cursor:pointer;font-weight:600}
+.swatch:hover{background:#f3f2ee}
+.swatch.on{border-color:var(--fg);box-shadow:0 0 0 1px var(--fg)}
+.dot{display:inline-block;width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.25)}
+.dot.grey{background:#8f959c}.dot.black{background:#111}.dot.white{background:#fff}
+.btn.primary{background:var(--fg);color:#fff;border-color:var(--fg)}
+.btn.primary:hover{background:#3a3833}
+@media (max-width:640px){.qgrid{grid-template-columns:1fr}}
+.sn .short{display:none}
+@media (max-width:640px){.sn .full{display:none}.sn .short{display:inline}}
+
+/* ---- cover logo (top right) ---------------------------------------------------- */
+.clogo{position:absolute;top:calc(24 * var(--pt));right:calc(24 * var(--pt))}
+.lg{display:block;line-height:0}
+.lg img{display:block}
+.clogo .lg.box{background:#fff;padding:calc(6 * var(--pt))}
+.blogo .lg.box{background:#fff;padding:calc(4 * var(--pt))}
+
+/* ---- back page: everything inside the card is drawn here ---------------------- */
+.backc{position:absolute;inset:0;--dy:0;color:#111;font-weight:300}
+.backc.has-logo{--dy:26}                                       /* room for the logo: content moves down this many pt */
+.backc .b,.backc .blogo{position:absolute;left:calc(135 * var(--pt));width:calc(326 * var(--pt));text-align:center}
+.backc .blogo{top:calc(174 * var(--pt));display:flex;justify-content:center}
+.backc .bqr{position:absolute;left:calc(254.6 * var(--pt));top:calc((193 + var(--dy)) * var(--pt));
+  width:calc(86 * var(--pt));height:calc(86 * var(--pt));padding:calc(6 * var(--pt));background:#fff;box-sizing:border-box}
+.backc .bqr svg{display:block;width:100%;height:100%;fill:#111}
+.backc .btrade{top:calc((301 + var(--dy)) * var(--pt));font-size:calc(8 * var(--pt));line-height:calc(11 * var(--pt));
+  letter-spacing:.0625em;color:#666}
+.backc .bname{top:calc((317 + var(--dy)) * var(--pt));font-size:calc(12 * var(--pt));line-height:calc(15 * var(--pt));font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backc .baddr{top:calc((337 + var(--dy)) * var(--pt));font-size:calc(9.5 * var(--pt));line-height:calc(14 * var(--pt))}
+.backc .bcth{top:calc((425 + var(--dy)) * var(--pt));font-size:calc(12 * var(--pt));line-height:calc(15 * var(--pt));font-weight:600}
+.backc .bct{top:calc((443 + var(--dy)) * var(--pt));font-size:calc(9.5 * var(--pt));line-height:calc(14 * var(--pt))}
+.backc .bsoc{top:calc((485 + var(--dy)) * var(--pt));display:flex;justify-content:center;gap:calc(5 * var(--pt))}
+.backc .bsoc i{display:flex;align-items:center;justify-content:center;width:calc(14 * var(--pt));height:calc(14 * var(--pt));
+  border-radius:50%;background:#111;color:#fff;font-style:normal;font-weight:700;font-size:calc(10 * var(--pt));line-height:1}
+.backc .bview{top:calc((517 + var(--dy)) * var(--pt));font-size:calc(8.5 * var(--pt));line-height:calc(11 * var(--pt));
+  letter-spacing:.07em;color:#444}
+.backc .bweb{top:calc((530 + var(--dy)) * var(--pt));font-size:calc(18 * var(--pt));line-height:calc(22 * var(--pt));font-weight:600;white-space:nowrap}
+.backc .bcopy{top:calc((563 + var(--dy)) * var(--pt));font-size:calc(7 * var(--pt));line-height:calc(10 * var(--pt));
+  letter-spacing:.057em;color:#666}
+/* black cover style: white text on the black page */
+.backc.dark{color:#fff}
+.backc.dark .btrade,.backc.dark .bcopy{color:#8a8a8a}
+.backc.dark .bview{color:#bbb}
+.backc.dark .bsoc i{background:#fff;color:#111}
+.backc.dark .bsoc svg{stroke:#111}
+
+/* ---- "see page N" notes redrawn after pages are added or removed ---------------- */
+.xref{position:absolute;white-space:nowrap;font-weight:400;line-height:1.21}

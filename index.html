@@ -6,8 +6,9 @@
 <title>Cottonridge 2027 Brochure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=5">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="custom.css?v=2">
 </head>
 <body>
 <header class="topbar">
@@ -19,14 +20,49 @@
 </header>
 
 <section class="how" id="how">
+  <!-- Step 1: company details, logo, cover style -->
   <div class="acc">
     <button class="acchd" type="button" aria-expanded="false" aria-controls="body1" data-step="1">
       <span class="stepno">1</span>
-      <span class="acctxt"><span class="sn">Choose your products</span><span class="accsub" id="sub1">Pick your ranges and styles.</span></span>
+      <span class="acctxt"><span class="sn">Customise</span><span class="accsub">Add your logo and company details.</span></span>
       <span class="accact"><span class="chev" aria-hidden="true">&#8250;</span></span>
     </button>
     <div class="accbody" id="body1" hidden>
-      <p class="st">Tap a product to include it or leave it out. The pages, index and page numbers follow your choice straight away.</p>
+      <p class="st">Your logo goes top right on the cover and at the top of the back page. Your company details replace the ones on the back page.</p>
+      <div class="qgrid">
+        <label>Company name<input type="text" id="fName" maxlength="40" autocomplete="off"></label>
+        <label>Web address<input type="text" id="fWeb" maxlength="60" autocomplete="off"></label>
+        <label>Phone<input type="text" id="fPhone" maxlength="30" autocomplete="off"></label>
+        <label>Email<input type="text" id="fEmail" maxlength="60" autocomplete="off"></label>
+        <label class="wide">Address (one line each, up to 5)<textarea id="fAddr" rows="5" maxlength="260"></textarea></label>
+      </div>
+      <div class="qlogo">
+        <button class="btn" type="button" id="logoBtn">Choose your logo</button>
+        <button class="btn" type="button" id="logoClear" hidden>Remove logo</button>
+        <input type="file" id="logoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp,image/gif" hidden>
+        <label class="qchk"><input type="checkbox" id="logoBox" checked> White box behind the logo</label>
+        <span class="qhint" id="logoHint">PNG, JPG or SVG.</span>
+      </div>
+      <div class="qlogo" id="variantRow">
+        <span class="qlabel">Cover style</span>
+        <div class="swatches" id="swatches"></div>
+      </div>
+      <div class="qlogo">
+        <button class="btn primary" type="button" id="doneBtn">Update flipbook</button>
+        <button class="btn" type="button" id="resetBtn">Reset to Cottonridge details</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: which products and pages -->
+  <div class="acc">
+    <button class="acchd" type="button" aria-expanded="false" aria-controls="body2" data-step="2">
+      <span class="stepno">2</span>
+      <span class="acctxt"><span class="sn"><span class="full">Choose what goes in your brochure</span><span class="short">Choose pages</span></span><span class="accsub" id="sub2">Pick your products and pages.</span></span>
+      <span class="accact"><span class="chev" aria-hidden="true">&#8250;</span></span>
+    </button>
+    <div class="accbody" id="body2" hidden>
+      <p class="st">Tap a product or page to include it or leave it out. The index, the page numbers and every &ldquo;see page&rdquo; note follow your choice straight away.</p>
       <div class="inchead">
         <span class="inccount" id="count"></span>
         <div class="inclinks">
@@ -38,17 +74,7 @@
     </div>
   </div>
 
-  <div class="acc">
-    <button class="acchd" type="button" aria-expanded="false" aria-controls="body2" data-step="2">
-      <span class="stepno">2</span>
-      <span class="acctxt"><span class="sn">Customise</span><span class="accsub">Add your logo and company details.</span></span>
-      <span class="accact"><span class="chev" aria-hidden="true">&#8250;</span></span>
-    </button>
-    <div class="accbody" id="body2" hidden>
-      <p class="st">Coming next: add your own logo and contact details to the cover and back page.</p>
-    </div>
-  </div>
-
+  <!-- Step 3: download (not built yet) -->
   <div class="acc">
     <button class="acchd" type="button" aria-expanded="false" aria-controls="body3" data-step="3">
       <span class="stepno">3</span>
@@ -75,6 +101,7 @@
 </main>
 
 <script src="lib/page-flip.browser.js"></script>
-<script src="app.js?v=6"></script>
+<script src="lib/qrcode.js"></script>
+<script src="app.js?v=7"></script>
 </body>
 </html>

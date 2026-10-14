@@ -4,6 +4,67 @@
   594.96,
   841.92
  ],
+ "build": "1791973516",
+ "live": true,
+ "variants": [
+  {
+   "id": "grey",
+   "label": "Grey",
+   "dark": false
+  },
+  {
+   "id": "black",
+   "label": "Black",
+   "dark": true
+  },
+  {
+   "id": "white",
+   "label": "White",
+   "dark": false
+  }
+ ],
+ "defaultVariant": "grey",
+ "defaults": {
+  "trade": "Cottonridge is a trading brand of TGI Corporation Ltd",
+  "name": "TGI Corporation LTD",
+  "address": [
+   "Cottonridge House",
+   "24C Conduit RD",
+   "Norton Canes",
+   "Cannock",
+   "Staffordshire, WS11 9TJ"
+  ],
+  "email": "salesteam@cottonridge.co.uk",
+  "phone": "01543 278 558",
+  "web": "cottonridge.co.uk"
+ },
+ "options": [
+  {
+   "id": "story",
+   "label": "Our story",
+   "page": 2
+  },
+  {
+   "id": "why",
+   "label": "Why choose us",
+   "page": 3
+  },
+  {
+   "id": "ranges",
+   "label": "Our ranges",
+   "page": 4
+  },
+  {
+   "id": "cord",
+   "label": "Any cord. Any hood",
+   "page": 42
+  },
+  {
+   "id": "cords",
+   "label": "Cord options",
+   "page": 43
+  }
+ ],
  "tiers": [
   {
    "id": "base",
@@ -377,8 +438,6 @@
    ]
   }
  ],
- "build": "1791820464",
- "live": false,
  "pages": [
   {
    "id": "p01",
@@ -388,28 +447,36 @@
   {
    "id": "p02",
    "src": 2,
-   "kind": "story"
+   "kind": "story",
+   "opt": "story",
+   "num": "left"
   },
   {
    "id": "p03",
    "src": 3,
-   "kind": "offer"
+   "kind": "offer",
+   "opt": "why",
+   "num": "right"
   },
   {
    "id": "p04",
    "src": 4,
-   "kind": "ranges"
+   "kind": "ranges",
+   "opt": "ranges",
+   "num": "left"
   },
   {
    "id": "p05",
    "src": 5,
-   "kind": "index"
+   "kind": "index",
+   "num": "right"
   },
   {
    "id": "p06",
    "src": 6,
    "kind": "divider",
-   "tier": "base"
+   "tier": "base",
+   "num": "left"
   },
   {
    "id": "p07",
@@ -417,7 +484,8 @@
    "kind": "product",
    "requires": [
     "meteor"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p08",
@@ -425,7 +493,8 @@
    "kind": "product",
    "requires": [
     "apollo"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p09",
@@ -433,7 +502,8 @@
    "kind": "product",
    "requires": [
     "solar"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p10",
@@ -441,7 +511,8 @@
    "kind": "product",
    "requires": [
     "nebula"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p11",
@@ -449,7 +520,8 @@
    "kind": "product",
    "requires": [
     "astra"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p12",
@@ -458,7 +530,8 @@
    "requires": [
     "atlas"
    ],
-   "spreadStart": true
+   "spreadStart": true,
+   "num": "left"
   },
   {
    "id": "p13",
@@ -466,7 +539,8 @@
    "kind": "product",
    "requires": [
     "atlas"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p14",
@@ -474,7 +548,8 @@
    "kind": "product",
    "requires": [
     "juno"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p15",
@@ -482,13 +557,15 @@
    "kind": "product",
    "requires": [
     "vulcan"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p16",
    "src": 16,
    "kind": "divider",
-   "tier": "better"
+   "tier": "better",
+   "num": "left"
   },
   {
    "id": "p17",
@@ -496,7 +573,8 @@
    "kind": "product",
    "requires": [
     "orion"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p18",
@@ -504,7 +582,8 @@
    "kind": "product",
    "requires": [
     "eclipse"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p19",
@@ -512,7 +591,8 @@
    "kind": "product",
    "requires": [
     "cassini"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p20",
@@ -520,7 +600,8 @@
    "kind": "product",
    "requires": [
     "odyssey"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p21",
@@ -528,7 +609,8 @@
    "kind": "product",
    "requires": [
     "horizon"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p22",
@@ -537,7 +619,8 @@
    "requires": [
     "lunar"
    ],
-   "spreadStart": true
+   "spreadStart": true,
+   "num": "left"
   },
   {
    "id": "p23",
@@ -545,13 +628,15 @@
    "kind": "product",
    "requires": [
     "lunar"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p24",
    "src": 24,
    "kind": "divider",
-   "tier": "best"
+   "tier": "best",
+   "num": "left"
   },
   {
    "id": "p25",
@@ -559,7 +644,8 @@
    "kind": "product",
    "requires": [
     "gemini"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p26",
@@ -567,7 +653,8 @@
    "kind": "product",
    "requires": [
     "prostar"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p27",
@@ -575,7 +662,8 @@
    "kind": "product",
    "requires": [
     "andromeda"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p28",
@@ -583,7 +671,8 @@
    "kind": "product",
    "requires": [
     "titan"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p29",
@@ -591,7 +680,8 @@
    "kind": "product",
    "requires": [
     "comet"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p30",
@@ -599,7 +689,8 @@
    "kind": "product",
    "requires": [
     "saturn"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p31",
@@ -607,7 +698,8 @@
    "kind": "product",
    "requires": [
     "jupiter"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p32",
@@ -615,7 +707,8 @@
    "kind": "product",
    "requires": [
     "quasar"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p33",
@@ -623,7 +716,8 @@
    "kind": "product",
    "requires": [
     "neptune"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p34",
@@ -631,19 +725,22 @@
    "kind": "product",
    "requires": [
     "venus"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p35",
    "src": 35,
    "kind": "extra",
-   "tier": "best"
+   "tier": "best",
+   "num": "right"
   },
   {
    "id": "p36",
    "src": 36,
    "kind": "divider",
-   "kids": true
+   "kids": true,
+   "num": "left"
   },
   {
    "id": "p37",
@@ -652,7 +749,8 @@
    "requires": [
     "apollo-k",
     "solar-k"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p38",
@@ -661,7 +759,8 @@
    "requires": [
     "nebula-k",
     "astra-k"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p39",
@@ -669,7 +768,8 @@
    "kind": "product",
    "requires": [
     "orion-k"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p40",
@@ -678,7 +778,8 @@
    "requires": [
     "eclipse-k",
     "cassini-k"
-   ]
+   ],
+   "num": "left"
   },
   {
    "id": "p41",
@@ -686,17 +787,22 @@
    "kind": "product",
    "requires": [
     "andromeda-k"
-   ]
+   ],
+   "num": "right"
   },
   {
    "id": "p42",
    "src": 42,
-   "kind": "cord"
+   "kind": "cord",
+   "opt": "cord",
+   "num": "left"
   },
   {
    "id": "p43",
    "src": 43,
-   "kind": "cord"
+   "kind": "cord",
+   "opt": "cords",
+   "num": "right"
   },
   {
    "id": "p44",
@@ -704,27 +810,222 @@
    "kind": "back"
   }
  ],
+ "refs": [
+  {
+   "page": 8,
+   "kind": "xref",
+   "x": 28.3,
+   "y": 286.7,
+   "base": 294.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 37
+  },
+  {
+   "page": 9,
+   "kind": "xref",
+   "x": 382.7,
+   "y": 241.7,
+   "base": 249.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 37
+  },
+  {
+   "page": 10,
+   "kind": "xref",
+   "x": 28.3,
+   "y": 298.7,
+   "base": 306.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 38
+  },
+  {
+   "page": 11,
+   "kind": "xref",
+   "x": 382.7,
+   "y": 264.7,
+   "base": 272.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 38
+  },
+  {
+   "page": 17,
+   "kind": "xref",
+   "x": 382.7,
+   "y": 275.7,
+   "base": 283.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 39
+  },
+  {
+   "page": 18,
+   "kind": "xref",
+   "x": 28.3,
+   "y": 275.7,
+   "base": 283.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 40
+  },
+  {
+   "page": 19,
+   "kind": "xref",
+   "x": 382.7,
+   "y": 286.7,
+   "base": 294.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 40
+  },
+  {
+   "page": 27,
+   "kind": "xref",
+   "x": 382.7,
+   "y": 252.7,
+   "base": 260.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Kids version available on page {n}.",
+   "target": 41
+  },
+  {
+   "page": 37,
+   "kind": "xref",
+   "x": 28.3,
+   "y": 226.7,
+   "base": 234.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 8
+  },
+  {
+   "page": 37,
+   "kind": "xref",
+   "x": 312.6,
+   "y": 203.7,
+   "base": 211.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 9
+  },
+  {
+   "page": 38,
+   "kind": "xref",
+   "x": 28.3,
+   "y": 238.7,
+   "base": 246.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 10
+  },
+  {
+   "page": 38,
+   "kind": "xref",
+   "x": 312.6,
+   "y": 215.7,
+   "base": 223.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 11
+  },
+  {
+   "page": 39,
+   "kind": "xref",
+   "x": 382.7,
+   "y": 264.7,
+   "base": 272.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 17
+  },
+  {
+   "page": 40,
+   "kind": "xref",
+   "x": 28.3,
+   "y": 226.7,
+   "base": 234.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 18
+  },
+  {
+   "page": 40,
+   "kind": "xref",
+   "x": 312.6,
+   "y": 238.7,
+   "base": 246.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 19
+  },
+  {
+   "page": 41,
+   "kind": "xref",
+   "x": 382.7,
+   "y": 252.7,
+   "base": 260.0,
+   "size": 8.0,
+   "color": "#444444",
+   "tpl": "Adults version on page {n}.",
+   "target": 27
+  },
+  {
+   "page": 42,
+   "kind": "tail",
+   "x": 394.9,
+   "y": 525.5,
+   "base": 535.0,
+   "size": 10.5,
+   "color": "#111111",
+   "tpl": ", for more info see page {n}.",
+   "alt": ".",
+   "target": 43
+  }
+ ],
  "frontIndex": [
   {
    "label": "Our story",
-   "src": 2
+   "src": 2,
+   "opt": "story"
   },
   {
    "label": "Why choose us",
-   "src": 3
+   "src": 3,
+   "opt": "why"
   },
   {
    "label": "Our ranges",
-   "src": 4
+   "src": 4,
+   "opt": "ranges"
   },
   {
-   "label": "Cord change",
-   "src": 42
+   "label": "Any cord. Any hood",
+   "src": 42,
+   "opt": "cord"
   },
   {
    "label": "Cord options",
-   "src": 43
+   "src": 43,
+   "opt": "cords"
   }
  ],
- "backIndex": []
+ "indexQuote": "\u201cWe\u2019re so happy you\u2019re launching a Workwear Hoodie, Polo and T-Shirt so we can finally offer our customers a Cottonridge workwear bundle.\u201d"
 }

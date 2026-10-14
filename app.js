@@ -1,9 +1,12 @@
 /* Cottonridge 2027 brochure.
  *
- * Everything is driven by `kept`, the set of product ids in the brochure.
- * buildBook() turns that into an ordered page list (dropping pages nobody needs,
- * keeping two-page products on a left/right spread, regenerating the index and
- * page numbers) and hands it to the page-flip engine.
+ * Two things drive the book:
+ *   kept    - the product ids and page ids ('opt-story' ...) in the brochure.
+ *   custom  - the customer's company details, logo and cover style.
+ * buildBook() turns `kept` into an ordered page list (dropping pages nobody needs, keeping two-page
+ * products on a left/right spread) and redraws everything that depends on page order: the index, the
+ * printed page numbers and every "see page N" note. `custom` only touches the cover logo and the back
+ * page, so those are refreshed in place without rebuilding the book.
  *
  * window.brochure.setKept(ids) rebuilds the book; ?kept=meteor,atlas does the same from the URL.
  */
@@ -22,9 +25,11 @@
   let layout = [];          // body plus transparent end blanks (landscape) - what the engine shows
   let dims = { pw: 0, ph: 0, portrait: false };
   let pageW = 595, pageH = 842;
+  const custom = { variant: null, name: '', web: '', phone: '', email: '', address: '', logo: null, logoRatio: 3, logoBox: true };
 
   // ---- page list --------------------------------------------------------------
   function isVisible(p) {
+    if (p.opt) return kept.has('opt-' + p.opt);
     const keptP = catalog.products.filter((x) => kept.has(x.id));
     switch (p.kind) {
       case 'product': return p.requires.some((id) => kept.has(id));
@@ -51,12 +56,15 @@
   const pad2 = (n) => String(n).padStart(2, '0');
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+  const variantOf = () => (catalog.variants || []).find((v) => v.id === custom.variant) || null;
+  const pageFile = (p) => ((p.kind === 'cover' || p.kind === 'back') && variantOf() ? `${p.id}-${custom.variant}` : p.id);
+
   function pageEl(p, pos, posOfSrc) {
     const el = document.createElement('div');
     el.className = 'page';
     if (p.blank) { el.classList.add('blank'); return el; }
     const img = document.createElement('img');
-    img.src = `${base}pages/${p.id}.jpg?v=${catalog.build}`;
+    img.src = `${base}pages/${pageFile(p)}.jpg?v=${catalog.build}`;
     img.alt = '';
     img.decoding = 'async';
     img.draggable = false;
@@ -65,19 +73,35 @@
       el.classList.add('index');
       el.insertAdjacentHTML('beforeend', indexHTML(posOfSrc));
     }
+    if (p.kind === 'cover') { el.classList.add('cover'); el.insertAdjacentHTML('beforeend', '<div class="clogo" data-slot="cover"></div>'); }
+    if (p.kind === 'back') { el.classList.add('back'); el.insertAdjacentHTML('beforeend', '<div class="backc" data-slot="back"></div>'); }
     if (p.num) {
       const n = document.createElement('span');
       n.className = 'pnum ' + (pos % 2 === 0 ? 'left' : 'right');
       n.textContent = pos;
       el.appendChild(n);
     }
+    const refs = (catalog.refs || []).filter((r) => r.page === p.src);
+    if (refs.length) el.insertAdjacentHTML('beforeend', refs.map((r) => refHTML(r, posOfSrc)).join(''));
+    fillSlots(el);
     return el;
+  }
+
+  /** A "see page N" note, redrawn with the page's new number (or dropped when that page is out). */
+  function refHTML(r, posOfSrc) {
+    const n = posOfSrc[r.target];
+    const text = n ? r.tpl.replace('{n}', n) : (r.alt || '');
+    if (!text) return '';
+    // placed by text baseline: with Inter's 1.21 line box the baseline sits .96875em below the top
+    return `<span class="xref" style="left:calc(${r.x} * var(--pt));top:calc(${(r.base - 0.96875 * r.size).toFixed(2)} * var(--pt));` +
+      `font-size:calc(${r.size} * var(--pt));color:${r.color}">${esc(text)}</span>`;
   }
 
   function indexHTML(posOfSrc) {
     const row = (label, src) => `<div class="row"><span>${esc(label)}</span><span>${posOfSrc[src]}</span></div>`;
     let html = '<div class="idx"><h2>Index</h2><div class="flow">';
-    html += '<section class="sec front">' + [...catalog.frontIndex, ...catalog.backIndex].map((f) => row(f.label, f.src)).join('') + '</section>';
+    const front = [...(catalog.frontIndex || []), ...(catalog.backIndex || [])].filter((f) => !f.opt || kept.has('opt-' + f.opt));
+    html += '<section class="sec front">' + front.map((f) => row(f.label, f.src)).join('') + '</section>';
 
     for (const tier of catalog.tiers) {
       const items = catalog.products.filter((x) => x.tier === tier.id && kept.has(x.id));
@@ -96,8 +120,138 @@
     }
     html += '</div>';
     if (['vulcan', 'prostar', 'andromeda'].some((id) => kept.has(id)))
-      html += '<div class="quote">“We’re so happy you’re launching a Workwear Hoodie, Polo and T-Shirt so we can finally offer our customers a Cottonridge workwear bundle.”</div>';
+      html += `<div class="quote">${esc(catalog.indexQuote)}</div>`;
     return html + '</div>';
+  }
+
+  // ---- customer details: cover logo + back page --------------------------------
+  const isDefaultCompany = () => custom.name.trim() === catalog.defaults.name;
+
+  function logoHTML(where) {
+    if (!custom.logo) return '';
+    const max = where === 'cover' ? { w: 150, h: 60 } : { w: 180, h: 30 };
+    const w = Math.min(max.w, max.h * custom.logoRatio), h = w / custom.logoRatio;
+    return `<div class="lg${custom.logoBox ? ' box' : ''}"><img src="${custom.logo}" alt="" ` +
+      `style="width:calc(${w.toFixed(1)} * var(--pt));height:calc(${h.toFixed(1)} * var(--pt))"></div>`;
+  }
+
+  function qrSvg(text) {
+    try {
+      const qr = qrcode(0, 'M');
+      qr.addData(text);
+      qr.make();
+      const n = qr.getModuleCount();
+      let d = '';
+      for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
+      return `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" aria-hidden="true"><path d="${d}"/></svg>`;
+    } catch (e) { return ''; }
+  }
+
+  /** The back page's card contents. Positions match the printed original (see style.css .backc). */
+  function backHTML() {
+    const name = custom.name.trim();
+    const email = custom.email.trim(), phone = custom.phone.trim();
+    const addr = custom.address.split(/\r?\n/).map((l) => l.trim()).filter(Boolean).slice(0, 5);
+    const web = custom.web.trim().replace(/^https?:\/\//i, '').replace(/\/+$/, '');
+    const url = web ? 'https://' + web : '';
+    const keepBrand = isDefaultCompany();
+    let h = '';
+    if (custom.logo) h += `<div class="blogo">${logoHTML('back')}</div>`;
+    if (url) h += `<div class="bqr">${qrSvg(url)}</div>`;
+    if (keepBrand) h += `<div class="b btrade">${esc(catalog.defaults.trade)}</div>`;
+    if (name) h += `<div class="b bname">${esc(name)}</div>`;
+    if (addr.length) h += `<div class="b baddr">${addr.map(esc).join('<br>')}</div>`;
+    if (email || phone) {
+      h += '<div class="b bcth">Contact us</div>';
+      h += `<div class="b bct">${[email, phone].filter(Boolean).map(esc).join('<br>')}</div>`;
+    }
+    if (keepBrand) h += '<div class="b bsoc"><i>f</i><i><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r=".6" fill="#fff"/></svg></i></div>';
+    if (web) {
+      const fs = Math.max(9, Math.min(18, 300 / (web.length * 0.57)));      // long web addresses shrink to fit the card
+      h += '<div class="b bview">View our full range online</div>';
+      h += `<div class="b bweb" style="font-size:calc(${fs.toFixed(1)} * var(--pt))">${esc(web)}</div>`;
+    }
+    h += `<div class="b bcopy">© Copyright 2027.${name ? ' ' + esc(name) + '.' : ''}<br>All rights reserved.</div>`;
+    return h;
+  }
+
+  /** Refresh the cover logo, back page and cover style everywhere they appear (also inside the engine's temporary copies). */
+  function fillSlots(root) {
+    root = root || document;
+    const dark = !!(variantOf() && variantOf().dark);
+    root.querySelectorAll('[data-slot="cover"]').forEach((s) => { s.innerHTML = logoHTML('cover'); });
+    root.querySelectorAll('[data-slot="back"]').forEach((s) => {
+      s.className = 'backc' + (custom.logo ? ' has-logo' : '') + (dark ? ' dark' : '');
+      s.innerHTML = backHTML();
+    });
+    const pages = root.matches && root.matches('.page.cover,.page.back') ? [root] : [...root.querySelectorAll('.page.cover,.page.back')];
+    pages.forEach((pg) => {
+      pg.classList.toggle('dark', dark);
+      const img = pg.querySelector('img');
+      const id = pg.classList.contains('cover') ? 'p01' : 'p44';
+      if (img && variantOf()) {
+        const want = `${base}pages/${id}-${custom.variant}.jpg?v=${catalog.build}`;
+        if (img.getAttribute('src') !== want) img.src = want;
+      }
+    });
+  }
+
+  let fillTimer;
+  const refreshCustom = () => { clearTimeout(fillTimer); fillTimer = setTimeout(() => fillSlots(document), 60); };
+
+  function initCustom() {
+    const d = catalog.defaults;
+    const reset = () => Object.assign(custom, { name: d.name, web: d.web, phone: d.phone, email: d.email,
+      address: d.address.join('\n'), logo: null, logoBox: true, variant: catalog.defaultVariant || null });
+    reset();
+    const f = { name: $('fName'), web: $('fWeb'), phone: $('fPhone'), email: $('fEmail'), address: $('fAddr') };
+    const sync = () => { for (const k in f) f[k].value = custom[k]; $('logoBox').checked = custom.logoBox; renderLogoUi(); renderSwatches(); };
+    for (const k in f) {
+      f[k].placeholder = k === 'address' ? d.address.join('\n') : d[k];
+      f[k].addEventListener('input', () => { custom[k] = f[k].value; refreshCustom(); });
+    }
+    $('logoBox').addEventListener('change', () => { custom.logoBox = $('logoBox').checked; refreshCustom(); });
+    $('logoBtn').onclick = () => $('logoFile').click();
+    $('logoClear').onclick = () => { custom.logo = null; renderLogoUi(); refreshCustom(); };
+    $('logoFile').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      if (!/^image\//.test(file.type)) { $('logoHint').textContent = 'That file is not an image. Please choose a PNG, JPG or SVG.'; return; }
+      const rd = new FileReader();
+      rd.onload = () => {
+        const im = new Image();
+        im.onload = () => {
+          custom.logoRatio = im.naturalWidth && im.naturalHeight ? im.naturalWidth / im.naturalHeight : 3;
+          custom.logo = rd.result;
+          renderLogoUi(file.name);
+          refreshCustom();
+        };
+        im.onerror = () => { $('logoHint').textContent = 'That image could not be read. Try a PNG, JPG or SVG.'; };
+        im.src = rd.result;
+      };
+      rd.readAsDataURL(file);
+    });
+    $('doneBtn').onclick = () => { fillSlots(document); closeAll(); };
+    $('resetBtn').onclick = () => { reset(); sync(); refreshCustom(); };
+    $('variantRow').hidden = !(catalog.variants && catalog.variants.length > 1);
+    sync();
+  }
+
+  function renderLogoUi(name) {
+    $('logoClear').hidden = !custom.logo;
+    $('logoBtn').textContent = custom.logo ? 'Change logo' : 'Choose your logo';
+    if (!custom.logo) $('logoHint').textContent = 'PNG, JPG or SVG.';
+    else if (name) $('logoHint').textContent = name;
+  }
+
+  function renderSwatches() {
+    $('swatches').innerHTML = (catalog.variants || []).map((v) =>
+      `<button type="button" class="swatch${v.id === custom.variant ? ' on' : ''}" data-v="${v.id}" aria-pressed="${v.id === custom.variant}">` +
+      `<i class="dot ${v.id}"></i>${esc(v.label)}</button>`).join('');
+    $('swatches').querySelectorAll('.swatch').forEach((b) => {
+      b.onclick = () => { custom.variant = b.dataset.v; renderSwatches(); fillSlots(document); };
+    });
   }
 
   // ---- book -------------------------------------------------------------------
@@ -313,37 +467,50 @@
   const thumb = (x) => `${base}pages/thumb/p${pad2(x.pages[0])}.jpg?v=${catalog.build}`;
   let rebuildTimer;
 
+  const tileHTML = (src, name, tag) =>
+    `<span class="th"><img src="${src}" alt="" loading="lazy"><span class="tick">✓</span></span>` +
+    `<span class="nm">${esc(name)}</span>${tag ? `<span class="tg">${esc(tag)}</span>` : ''}`;
+
+  function group(root, key, title, tagline, tiles) {
+    const sec = document.createElement('section');
+    sec.className = 'tier';
+    sec.dataset.group = key;
+    sec.innerHTML =
+      `<div class="tierhd"><h3>${esc(title)}</h3><span class="tag">${esc(tagline)}</span>` +
+      `<span class="tc"></span><button class="btn" type="button" data-act="on">All</button>` +
+      `<button class="btn" type="button" data-act="off">None</button></div><div class="incgrid"></div>`;
+    const grid = sec.querySelector('.incgrid');
+    for (const t of tiles) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'inc';
+      b.dataset.id = t.id;
+      b.setAttribute('aria-pressed', 'true');
+      b.innerHTML = tileHTML(t.thumb, t.name, t.tag);
+      b.onclick = () => toggle([t.id], !kept.has(t.id));
+      grid.appendChild(b);
+    }
+    const ids = tiles.map((t) => t.id);
+    sec.querySelector('[data-act=on]').onclick = () => toggle(ids, true);
+    sec.querySelector('[data-act=off]').onclick = () => toggle(ids, false);
+    root.appendChild(sec);
+  }
+
+  const allIds = () => [...catalog.products.map((x) => x.id), ...(catalog.options || []).map((o) => 'opt-' + o.id)];
+
   function buildPicker() {
     const root = $('tiers');
     root.innerHTML = '';
-    for (const tier of catalog.tiers) {
-      const items = catalog.products.filter((x) => x.tier === tier.id);
-      const sec = document.createElement('section');
-      sec.className = 'tier';
-      sec.dataset.tier = tier.id;
-      sec.innerHTML =
-        `<div class="tierhd"><h3>${esc(tier.name)}</h3><span class="tag">${esc(tier.tagline)}</span>` +
-        `<span class="tc"></span><button class="btn" type="button" data-act="on">All</button>` +
-        `<button class="btn" type="button" data-act="off">None</button></div><div class="incgrid"></div>`;
-      const grid = sec.querySelector('.incgrid');
-      for (const x of items) {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'inc';
-        b.dataset.id = x.id;
-        b.setAttribute('aria-pressed', 'true');
-        b.innerHTML =
-          `<span class="th"><img src="${thumb(x)}" alt="" loading="lazy"><span class="tick">✓</span></span>` +
-          `<span class="nm">${esc(x.name)}</span><span class="tg">${esc(x.category)}</span>`;
-        b.onclick = () => toggle([x.id], !kept.has(x.id));
-        grid.appendChild(b);
-      }
-      sec.querySelector('[data-act=on]').onclick = () => toggle(items.map((x) => x.id), true);
-      sec.querySelector('[data-act=off]').onclick = () => toggle(items.map((x) => x.id), false);
-      root.appendChild(sec);
+    if (catalog.options && catalog.options.length) {
+      group(root, 'pages', 'Pages', 'Introduction and cord pages', catalog.options.map((o) => ({
+        id: 'opt-' + o.id, name: o.label, tag: '', thumb: `${base}pages/thumb/p${pad2(o.page)}.jpg?v=${catalog.build}` })));
     }
-    $('all').onclick = () => toggle(catalog.products.map((x) => x.id), true);
-    $('none').onclick = () => toggle(catalog.products.map((x) => x.id), false);
+    for (const tier of catalog.tiers) {
+      group(root, tier.id, tier.name, tier.tagline, catalog.products.filter((x) => x.tier === tier.id).map((x) => ({
+        id: x.id, name: x.name, tag: x.category, thumb: thumb(x) })));
+    }
+    $('all').onclick = () => toggle(allIds(), true);
+    $('none').onclick = () => toggle(allIds(), false);
   }
 
   function toggle(ids, on) {
@@ -360,13 +527,13 @@
       b.setAttribute('aria-pressed', on);
     });
     document.querySelectorAll('.tier').forEach((sec) => {
-      const items = catalog.products.filter((x) => x.tier === sec.dataset.tier);
-      sec.querySelector('.tc').textContent = `${items.filter((x) => kept.has(x.id)).length} of ${items.length}`;
+      const tiles = [...sec.querySelectorAll('.inc')];
+      sec.querySelector('.tc').textContent = `${tiles.filter((b) => kept.has(b.dataset.id)).length} of ${tiles.length}`;
     });
-    const total = catalog.products.length, n = [...kept].length;
-    const pages = arrange().length;
-    $('count').textContent = `${n} of ${total} products · ${pages} pages`;
-    $('sub1').textContent = `${n} of ${total} products · ${pages} pages`;
+    const total = catalog.products.length, n = catalog.products.filter((x) => kept.has(x.id)).length;
+    const text = `${n} of ${total} products · ${arrange().length} pages`;
+    $('count').textContent = text;
+    $('sub2').textContent = text;
   }
 
   /** Header pills to move between brochures (only shown when there is more than one). */
@@ -379,7 +546,7 @@
 
   // ---- api / init -------------------------------------------------------------
   function setKept(ids) {
-    const valid = new Set(catalog.products.map((p) => p.id));
+    const valid = new Set(allIds());
     kept = new Set([...ids].filter((id) => valid.has(id)));
     buildBook();
   }
@@ -404,7 +571,8 @@
     document.title = catalog.title + ' Brochure';
 
     const fromUrl = new URLSearchParams(location.search).get('kept');
-    kept = new Set(fromUrl ? fromUrl.split(',') : catalog.products.map((p) => p.id));
+    kept = new Set(fromUrl ? fromUrl.split(',') : allIds());
+    initCustom();
     buildPicker();
     applyZoom();
     setKept(kept);
