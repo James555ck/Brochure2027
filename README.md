@@ -4,8 +4,8 @@ A flipbook of the Cottonridge 2027 brochure that a customer can make their own. 
 **Every page is rendered from the design files** (the `.dc.html` files in `Desktop\Claude\Brochure 2027 Customisable`), not from PDFs.
 
 **1 Customise** - company name, web address, phone, email and address replace the details on the back page's white card;
-a logo goes top right on the cover and in the empty top of the back page's card (with an optional white box behind it);
-the cover style is Black (the default), Grey or White. The logo areas are large: up to 280 x 120 pt on the cover and
+a logo goes bottom left on the cover and in the empty top of the back page's card (with an optional white box behind it);
+the cover style is Black (the default), Grey or White. The logo areas are large: up to 420 x 200 pt on the cover and
 270 x 100 pt on the back card (the page is 595 pt wide).
 
 **2 Choose what goes in your brochure** - tick products and pages in or out. Pages: Our story and Why choose us (both start

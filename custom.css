@@ -57,8 +57,8 @@
 .sn .short{display:none}
 @media (max-width:640px){.sn .full{display:none}.sn .short{display:inline}}
 
-/* ---- cover logo (top right) ---------------------------------------------------- */
-.clogo{position:absolute;top:calc(28 * var(--pt));right:calc(28 * var(--pt))}
+/* ---- cover logo (bottom left, above the "2027 BROCHURE" line, which sits 30pt up from the bottom edge) ---- */
+.clogo{position:absolute;left:calc(28 * var(--pt));bottom:calc(62 * var(--pt))}
 .lg{display:block;line-height:0}
 .lg img{display:block}
 .clogo .lg.box{padding:calc(10 * var(--pt))}

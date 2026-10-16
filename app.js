@@ -145,7 +145,7 @@
   // ---- customer details: cover logo + back page --------------------------------
   function logoHTML(where) {
     if (!custom.logo) return '';
-    const max = where === 'cover' ? { w: 280, h: 120 } : { w: 270, h: 100 };
+    const max = where === 'cover' ? { w: 420, h: 200 } : { w: 270, h: 100 };
     const w = Math.min(max.w, max.h * custom.logoRatio), h = w / custom.logoRatio;
     return `<div class="lg${custom.logoBox !== 'none' ? ' box ' + custom.logoBox : ''}"><img src="${custom.logo}" alt="" ` +
       `style="width:calc(${w.toFixed(1)} * var(--pt));height:calc(${h.toFixed(1)} * var(--pt))"></div>`;
