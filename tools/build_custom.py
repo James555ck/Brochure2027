@@ -23,6 +23,7 @@ ROOT = bp.ROOT
 TOOLS = Path(__file__).resolve().parent
 # cover styles in the order the form offers them; the first is the default
 VARIANTS = [("black", "Black", True), ("grey", "Grey", False), ("white", "White", False)]
+WORDMARK = {"black"}      # covers with the big COTTONRIDGE lettering up the right side: the customer's logo is kept narrower there
 PRINTED = {1: "cover", 2: "story", 3: "offer", 4: "ranges", 5: "index", 42: "cord", 43: "cord", 44: "back"}
 # pages a customer can leave out on their own (id, label, source page)
 OPTIONS = [("story", "Our story", 2), ("why", "Why choose us", 3), ("ranges", "Our ranges", 4),
@@ -100,7 +101,7 @@ def main(folder, brochure_id="2027", skip_render=False):
         "pageSize": [595.28, 841.89],
         "build": str(int(time.time())),
         "live": True,
-        "variants": [{"id": v, "label": lb, "dark": dk} for v, lb, dk in VARIANTS],
+        "variants": [{"id": v, "label": lb, "dark": dk, "wordmark": v in WORDMARK} for v, lb, dk in VARIANTS],
         "defaultVariant": VARIANTS[0][0],
         "defaults": render["defaults"],
         "options": [{"id": i, "label": lb, "page": p, "on": i not in OFF_BY_DEFAULT} for i, lb, p in OPTIONS],

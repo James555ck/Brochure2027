@@ -4,23 +4,26 @@
   595.28,
   841.89
  ],
- "build": "1791980387",
+ "build": "1793876616",
  "live": true,
  "variants": [
   {
    "id": "black",
    "label": "Black",
-   "dark": true
+   "dark": true,
+   "wordmark": true
   },
   {
    "id": "grey",
    "label": "Grey",
-   "dark": false
+   "dark": false,
+   "wordmark": false
   },
   {
    "id": "white",
    "label": "White",
-   "dark": false
+   "dark": false,
+   "wordmark": false
   }
  ],
  "defaultVariant": "black",
