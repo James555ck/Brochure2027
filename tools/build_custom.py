@@ -23,7 +23,7 @@ ROOT = bp.ROOT
 TOOLS = Path(__file__).resolve().parent
 # cover styles in the order the form offers them; the first is the default
 VARIANTS = [("black", "Black", True), ("grey", "Grey", False), ("white", "White", False)]
-WORDMARK = {"black"}      # covers with the big COTTONRIDGE lettering up the right side: the customer's logo is kept narrower there
+WORDMARK = {"black", "grey", "white"}      # covers with the big COTTONRIDGE lettering up the right side: the customer's logo is kept narrower there
 PRINTED = {1: "cover", 2: "story", 3: "offer", 4: "ranges", 5: "index", 42: "cord", 43: "cord", 44: "back"}
 # pages a customer can leave out on their own (id, label, source page)
 OPTIONS = [("story", "Our story", 2), ("why", "Why choose us", 3), ("ranges", "Our ranges", 4),
@@ -35,17 +35,28 @@ THUMB_W = 397
 
 def apply_front_overrides(root):
     """Front covers supplied as finished images (brochures/<id>/overrides/front-<style>.jpg) replace the rendered ones.
-    They are scaled to fill the A4 page and trimmed at the top, so the "2027 BROCHURE" line stays at the bottom."""
+
+    Covers without the lettering are scaled to the page width and trimmed at the top (so the "2027 BROCHURE" line stays at
+    the bottom). Covers WITH the big COTTONRIDGE lettering (WORDMARK) have equal margins top and bottom and the hoodie lined up
+    with the back page, so nothing may be cut or moved: they are fitted to the page exactly, which stretches them slightly when
+    they are not quite A4-shaped (the supplied 1342 x 2000 images are ~5% narrower than A4)."""
     out = root / "pages"
     for f in sorted((root / "overrides").glob("front-*.jpg")):
         style = f.stem.split("-", 1)[1]
         W, H = Image.open(out / f"p01-{style}.jpg").size
         im = Image.open(f).convert("RGB")
-        k = max(W / im.width, H / im.height)
-        im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
-        left, top = (im.width - W) // 2, im.height - H
-        im.crop((left, top, left + W, top + H)).save(out / f"p01-{style}.jpg", quality=88)
-        print("front cover override:", style, f.name)
+        if style in WORDMARK:
+            squeeze = (im.width / im.height) / (W / H)
+            im = im.resize((W, H), Image.LANCZOS)
+            note = f"(fitted to the page, stretched {abs(1 / squeeze - 1) * 100:.1f}%)"
+        else:
+            k = max(W / im.width, H / im.height)
+            im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+            left, top = (im.width - W) // 2, im.height - H
+            im = im.crop((left, top, left + W, top + H))
+            note = "(fit width)"
+        im.save(out / f"p01-{style}.jpg", quality=88)
+        print("front cover override:", style, f.name, note)
 
 
 def main(folder, brochure_id="2027", skip_render=False):

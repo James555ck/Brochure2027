@@ -39,10 +39,12 @@ a two-page product).
   captured, what depends on page order is hidden and its position recorded (`render.json`): the printed page number (with its
   colour: white on the photo pages), the "see page N" notes, and the index page's text and rules.
 
-- **Front covers supplied as images** - `brochures/2027/overrides/front-grey.jpg`, `front-white.jpg` and `front-black.jpg` (hoodie aligned
-  to the back pages; the black one is page 1 of `Cottonridge Brochure 2027 black.pdf`, with COTTONRIDGE up the right side) replace the
-  rendered fronts on every build. On the black cover the customer's logo is kept to 310 pt wide so it stays clear of the lettering. They are scaled to the page width and trimmed at the top.
-  To change a front cover, replace the file; to go back to the design file's cover, delete it.
+- **Front covers supplied as images** - `brochures/2027/overrides/front-black.jpg`, `front-grey.jpg` and `front-white.jpg` replace the
+  rendered fronts on every build. All three have the big COTTONRIDGE lettering up the right side (black: page 1 of
+  `Cottonridge Brochure 2027 black.pdf`; grey and white: images supplied 5 Nov, 1342 x 2000). They are fitted to the page exactly, so
+  nothing is cut and the hoodie stays lined up with the back page (the 1342 x 2000 images are ~5% narrower than A4, so they are stretched
+  by that much; export at A4 proportions to avoid it). On these covers the customer's logo is kept to 310 pt wide so it stays clear of the lettering.
+  To change a front cover, replace the file.
 
 ## How it works
 - `brochures/2027/pages/` - `pNN.jpg` (interior) and `pNNm.jpg` (mirrored twins of the single-page products), `p01-<style>.jpg` / `p44-<style>.jpg` (cover / back per style), `thumb/` (picker tiles).
