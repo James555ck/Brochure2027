@@ -3,6 +3,12 @@
 A flipbook of the Cottonridge 2027 brochure that a customer can make their own. Everything runs in the browser.
 **Every page is rendered from the design files** (the `.dc.html` files in `Desktop\Claude\Brochure 2027 Customisable`), not from PDFs.
 
+**The page** is laid out like the leavers flipbook (`james555ck.github.io/Flipbookshare`): the Cottonridge logo and title across the top with
+**Full screen** and **View range online** top right, the three steps as slim tabs, the book in the middle, and a bottom bar with the page
+counter (**Page 1 of 42**, **Pages 8-9 of 42** on a spread), a **Show all pages** thumbnail strip (the spread on show is outlined; click a
+thumbnail to jump there; the cover, index and back thumbnails are live, so they show the customer's logo and the current index) and the
+contact details. Full screen is hidden on browsers that don't support it (iPhone Safari).
+
 **1 Customise** - company name, web address, phone, email and address replace the details on the back page's white card;
 a logo goes bottom left on the cover and in the empty top of the back page's card (with an optional white box behind it);
 the cover style is Black (the default), Grey or White. The logo areas are large: up to 420 x 200 pt on the cover and

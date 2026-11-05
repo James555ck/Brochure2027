@@ -177,6 +177,7 @@
   /** Refresh the cover logo, back page and cover style everywhere they appear (also inside the engine's temporary copies). */
   function fillSlots(root) {
     root = root || document;
+    if (thumbsVariant !== custom.variant && body.length) buildThumbs();      // cover style changed: new cover/back thumbnails
     const dark = !!(variantOf() && variantOf().dark);
     root.querySelectorAll('[data-slot="cover"]').forEach((s) => { s.innerHTML = logoHTML('cover'); });
     root.querySelectorAll('[data-slot="back"]').forEach((s) => {
@@ -281,6 +282,7 @@
     // Landscape: a transparent blank either side puts the cover/back cover on a single page
     // (as the leavers flipbook does), so they turn like any other page instead of as a stiff board.
     layout = dims.portrait ? body : [{ blank: true, edge: true }, ...body, { blank: true, edge: true }];
+    buildThumbs(posOfSrc);
     const els = layout.map((p) => {
       const i = body.indexOf(p);
       const el = pageEl(p, i + 1, posOfSrc);
@@ -346,7 +348,76 @@
     if (landscape && i === 0) shift = -25;
     else if (landscape && i >= last) shift = 25;
     if (book) book.style.transform = `translateX(${shift}%)`;
+    showPosition(i, landscape);
   }
+
+  // ---- footer: page counter, "Show all pages" strip, full screen ---------------------
+  const pageNoEl = $('pageNo'), thumbsEl = $('thumbs'), allBtn = $('allBtn'), fsBtn = $('fsBtn');
+  let thumbsVariant = null, lastPosOfSrc = {};
+
+  /** "Page 1 of 44" / "Pages 8-9 of 44", and highlight the thumbnails of the spread on show. Layout index k is page k
+   *  when there are end blanks (landscape), so a spread starting at index i shows pages i and i+1. */
+  function showPosition(i, landscape) {
+    const total = body.length;
+    const shown = landscape ? [i, i + 1] : [i + 1];
+    const pages = shown.filter((k) => k >= 1 && k <= total);
+    pageNoEl.textContent = pages.length === 2 ? `Pages ${pages[0]}\u2013${pages[1]} of ${total}` : `Page ${pages[0]} of ${total}`;
+    let first = null;
+    thumbsEl.querySelectorAll('.tb').forEach((b) => {
+      const on = pages.includes(Number(b.dataset.pos));
+      b.classList.toggle('on', on);
+      if (on && !first) first = b;
+    });
+    if (first && !thumbsEl.hidden) first.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  }
+
+  function buildThumbs(posOfSrc) {
+    if (posOfSrc) lastPosOfSrc = posOfSrc;
+    thumbsVariant = custom.variant;
+    thumbsEl.innerHTML = '';
+    body.forEach((p, k) => {
+      const pos = k + 1;
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tb';
+      b.dataset.pos = pos;
+      b.setAttribute('aria-label', 'Go to page ' + pos);
+      if (p.blank) b.innerHTML = '<span class="bl"></span>';
+      else if (p.kind === 'cover' || p.kind === 'back' || p.kind === 'index') b.appendChild(pageEl(p, pos, lastPosOfSrc));   // live: logo, details, index
+      else b.innerHTML = `<img alt="Page ${pos}" loading="lazy" src="${base}pages/thumb/${pageFile(p)}${isMirrored(p, pos) ? 'm' : ''}.jpg?v=${catalog.build}">`;
+      b.onclick = () => goToPage(pos);
+      thumbsEl.appendChild(b);
+    });
+  }
+
+  /** Jump (no turning animation) to the spread that holds page `pos`. */
+  function goToPage(pos) {
+    if (!flip || busy) return;
+    const landscape = flip.getOrientation() === 'landscape';
+    const idx = landscape ? (pos % 2 === 0 ? pos : pos - 1) : pos - 1;
+    flip.turnToPage(idx);
+    applyState(flip.getCurrentPageIndex());
+  }
+
+  allBtn.onclick = () => {
+    thumbsEl.hidden = !thumbsEl.hidden;
+    allBtn.textContent = thumbsEl.hidden ? 'Show all pages' : 'Hide pages';
+    if (flip) showPosition(flip.getCurrentPageIndex(), flip.getOrientation() === 'landscape');
+  };
+
+  // full screen: the whole page, as on the leavers flipbook (hidden where the browser has no Fullscreen API, e.g. iPhone Safari)
+  const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement;
+  if (!(document.fullscreenEnabled || document.webkitFullscreenEnabled)) fsBtn.hidden = true;
+  fsBtn.onclick = () => {
+    if (fsElement()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else {
+      const el = document.documentElement;
+      const r = (el.requestFullscreen || el.webkitRequestFullscreen).call(el);
+      if (r && r.catch) r.catch(() => {});
+    }
+  };
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach((ev) =>
+    document.addEventListener(ev, () => { fsBtn.textContent = fsElement() ? 'Exit full screen' : 'Full screen'; }));
 
   // ---- zoom -------------------------------------------------------------------
   const FLIP_MS = 480;
@@ -549,14 +620,6 @@
     $('sub2').textContent = text;
   }
 
-  /** Header pills to move between brochures (only shown when there is more than one). */
-  function renderSwitcher(list, activeId) {
-    const nav = $('switch');
-    if (!nav || list.length < 2) return;
-    nav.innerHTML = list.map((b) =>
-      `<a class="pill${b.id === activeId ? ' on' : ''}" href="?b=${encodeURIComponent(b.id)}">${esc(b.label)}</a>`).join('');
-  }
-
   // ---- api / init -------------------------------------------------------------
   function setKept(ids) {
     const valid = new Set(allIds());
@@ -572,7 +635,6 @@
     const want = new URLSearchParams(location.search).get('b');
     const cur = list.find((b) => b.id === want) || list[0] || { id: '2027' };
     base = `brochures/${cur.id}/`;
-    renderSwitcher(list, cur.id);
     try {
       catalog = await (await fetch(base + 'catalog.json?t=' + Date.now(), { cache: 'no-store' })).json();
     } catch (e) {
@@ -580,7 +642,7 @@
       return;
     }
     [pageW, pageH] = catalog.pageSize;
-    $('title').textContent = catalog.title;
+    $('title').textContent = catalog.title.replace(/^Cottonridge\s+/i, '') + ' Brochure';     // the logo already says Cottonridge
     document.title = catalog.title + ' Brochure';
 
     const fromUrl = new URLSearchParams(location.search).get('kept');

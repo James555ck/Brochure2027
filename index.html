@@ -7,16 +7,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=8">
-<link rel="stylesheet" href="custom.css?v=6">
+<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="custom.css?v=7">
 </head>
 <body>
-<header class="topbar">
-  <div class="titles">
-    <h1 id="title">Cottonridge 2027</h1>
-    <p class="sub">Drag a corner, scroll, click the arrows, or use the keyboard</p>
+<header class="site-header">
+  <div class="brand">
+    <img class="logo" alt="Cottonridge" src="assets/cottonridge-logo.svg">
+    <span class="ptitle" id="title">2027 Brochure</span>
   </div>
-  <nav class="switch" id="switch" aria-label="Brochure"></nav>
+  <div class="hbtns">
+    <button class="pill" id="fsBtn" type="button">Full screen</button>
+    <a class="pill site-only" href="https://cottonridge.co.uk" target="_blank" rel="noopener">View range online</a>
+  </div>
 </header>
 
 <section class="how" id="how">
@@ -58,7 +61,7 @@
   <div class="acc">
     <button class="acchd" type="button" aria-expanded="false" aria-controls="body2" data-step="2">
       <span class="stepno">2</span>
-      <span class="acctxt"><span class="sn"><span class="full">Choose what goes in your brochure</span><span class="short">Choose</span></span><span class="accsub" id="sub2">Pick your products and pages.</span></span>
+      <span class="acctxt"><span class="sn">Products &amp; pages</span><span class="accsub" id="sub2">Pick your products and pages.</span></span>
       <span class="accact"><span class="chev" aria-hidden="true">&#8250;</span></span>
     </button>
     <div class="accbody" id="body2" hidden>
@@ -100,7 +103,13 @@
   <div class="status" id="status">Loading brochure&hellip;</div>
 </main>
 
+<div class="thumbs" id="thumbs" hidden></div>
+<footer class="site-footer">
+  <div class="fl"><span class="pageno" id="pageNo">Page 1 of 1</span><button class="linkbtn" id="allBtn" type="button">Show all pages</button></div>
+  <div class="fr"><a href="mailto:salesteam@cottonridge.co.uk">salesteam@cottonridge.co.uk</a><a href="tel:01543278558">01543 278 558</a></div>
+</footer>
+
 <script src="lib/page-flip.browser.js"></script>
-<script src="app.js?v=17"></script>
+<script src="app.js?v=19"></script>
 </body>
 </html>

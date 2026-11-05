@@ -60,9 +60,9 @@ def main(folder, brochure_id="2027", skip_render=False):
     thumbs.mkdir(exist_ok=True)
     for f in thumbs.glob("*.jpg"):
         f.unlink()
-    for n in range(2, 44):                                    # picker tiles
-        im = Image.open(out / f"p{n:02d}.jpg").convert("RGB")
-        im.resize((THUMB_W, round(im.height * THUMB_W / im.width)), Image.LANCZOS).save(thumbs / f"p{n:02d}.jpg", quality=72)
+    for src in sorted(out.glob("p*.jpg")):                    # picker tiles + the "Show all pages" strip: every page image
+        im = Image.open(src).convert("RGB")                   # (interior, mirrored twins pNNm, cover/back per style)
+        im.resize((THUMB_W, round(im.height * THUMB_W / im.width)), Image.LANCZOS).save(thumbs / src.name, quality=72)
 
     owners = {}
     for pid, *_r, pages in bp.PRODUCTS:
